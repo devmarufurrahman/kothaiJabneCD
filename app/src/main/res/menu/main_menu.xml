@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/main_menu_personal_profile"
+        android:icon="@drawable/icon_user"
+        android:title=" Personal Profile"
+        app:showAsAction="withText" />
+
+
+
+    <item
+        android:id="@+id/main_menu_about"
+        android:icon="@drawable/about"
+        android:title="About Kothai Jaben CD"
+        app:showAsAction="withText" />
+
+    <item
+        android:id="@+id/main_menu_logout"
+        android:icon="@drawable/logout"
+        android:title="Log Out"
+        app:showAsAction="withText" />
+
+</menu>

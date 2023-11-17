@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/home_container"
-        android:background="@color/white">
+        android:background="@color/color_3">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/custom_toolbar"
@@ -105,7 +105,6 @@
                             android:text="User Name"
                             android:layout_gravity="start"
                             android:textSize="14sp"
-                            android:fontFamily="@font/bdclean_bold"
                             android:textColor="@color/white"/>
 
                         <ImageView
@@ -123,7 +122,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/bdclean"
                         android:text="User Level"
                         android:textSize="12sp"/>
 
@@ -133,7 +131,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/bdclean"
                         android:text="User ID"
                         android:textSize="12sp"/>
 
@@ -143,7 +140,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/bdclean"
                         android:text="Address"
                         android:textSize="12sp"/>
 
@@ -153,7 +149,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:textColor="@color/white"
-                        android:fontFamily="@font/bdclean"
                         android:text="User Since: January 20, 2023"
                         android:textSize="12sp"/>
 
@@ -170,7 +165,7 @@
             android:layout_height="wrap_content"
             android:elevation="2dp"
             app:cardMaxElevation="8dp"
-            app:contentPaddingTop="32dp"
+            app:contentPaddingTop="15dp"
             app:cardBackgroundColor="@color/green_2">
 
                 <LinearLayout
@@ -184,20 +179,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_gravity="start"
-                        android:background="@drawable/home_text_layout"
-                        android:backgroundTint="@color/green_5"
-                        android:fontFamily="@font/bdclean"
                         android:gravity="center_vertical"
                         android:paddingHorizontal="10dp"
-                        android:text="Member Activity"
+                        android:text="Our Services"
+                        android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="19sp" />
 
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="start"
+                            android:gravity="center"
                             android:layout_marginRight="5dp"
                         android:layout_marginBottom="15dp"
                             android:weightSum="4"
@@ -218,11 +211,11 @@
                                     android:gravity="center"
                                     >
                                     <ImageView
-                                        android:id="@+id/event_btn"
-                                        android:layout_width="70dp"
+                                        android:id="@+id/ride_share_btn"
+                                        android:layout_width="50dp"
                                         android:layout_height="70dp"
-                                        android:src="@drawable/icon_event"
-                                        android:scaleType="centerInside"/>
+                                        android:src="@drawable/ride_share"
+                                        android:scaleType="fitCenter"/>
 
                                 </LinearLayout>
 
@@ -230,12 +223,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Events"
-                                    android:textColor="@color/white"
+                                    android:text="Ride Share"
+                                    android:textColor="@color/black"
                                     android:textSize="12sp"
 
-                                    android:fontFamily="@font/bdclean"
-                                    android:textAllCaps="false"/>
+                                    android:textAllCaps="true"/>
 
                             </LinearLayout>
 
@@ -254,10 +246,10 @@
                                     android:gravity="center"
                                     >
                                     <ImageView
-                                        android:id="@+id/social_media_btn"
+                                        android:id="@+id/parcel_delivery_btn"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:src="@drawable/icon_social_media"
+                                        android:src="@drawable/percel_delivery"
                                         android:scaleType="fitCenter"/>
 
                                 </LinearLayout>
@@ -265,11 +257,10 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Social Media"
-                                    android:textColor="@color/white"
+                                    android:text="Parcel Delivery"
+                                    android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    android:fontFamily="@font/bdclean"
-                                    android:textAllCaps="false"/>
+                                    android:textAllCaps="true"/>
 
                             </LinearLayout>
 
@@ -288,10 +279,10 @@
                                     >
 
                                     <ImageView
-                                        android:id="@+id/my_activity"
+                                        android:id="@+id/food_delivery_btn"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
-                                        android:src="@drawable/icon_my_activity"
+                                        android:src="@drawable/food_delivery"
                                         android:scaleType="centerInside"/>
 
                                 </LinearLayout>
@@ -299,11 +290,10 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="My Activity"
-                                    android:textColor="@color/white"
+                                    android:text="food delivery"
+                                    android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    android:fontFamily="@font/bdclean"
-                                    android:textAllCaps="false"/>
+                                    android:textAllCaps="true"/>
 
                             </LinearLayout>
 
@@ -324,7 +314,7 @@
                                         android:id="@+id/member_status"
                                         android:layout_width="50dp"
                                         android:layout_height="40dp"
-                                        android:src="@drawable/icon_member_status"
+                                        android:src="@drawable/medicine_delivery"
                                         android:scaleType="fitCenter"/>
 
                                 </LinearLayout>
@@ -334,10 +324,9 @@
                                     android:layout_height="wrap_content"
                                     android:text="Member Status"
                                     android:gravity="center"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    android:fontFamily="@font/bdclean"
-                                    android:textAllCaps="false"/>
+                                    android:textAllCaps="true"/>
 
                             </LinearLayout>
 
@@ -356,477 +345,23 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/home_card_2"
-            android:layout_below="@+id/home_card"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:contentPaddingTop="8dp"
-            app:contentPaddingBottom="10dp"
-            app:cardBackgroundColor="@color/green_2">
 
-            <LinearLayout
-                android:id="@+id/layout_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/home_card"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_gravity="start"
-                    android:gravity="center_vertical"
-                    android:text="Administrative Activity"
-                    android:background="@drawable/home_text_layout"
-                    android:backgroundTint="@color/green_5"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textAllCaps="false"
-                    android:paddingHorizontal="10dp"
-                    android:fontFamily="@font/bdclean"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:weightSum="4"
-                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/evaluation_btn"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/icon_evaluation"
-                                android:scaleType="fitCenter"/>
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Evaluation"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/chat_layout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/chat_btn"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:src="@drawable/icon_chat"
-                                android:scaleType="fitCenter"/>
-
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Chat Group"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/complain_btn"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:layout_marginHorizontal="5dp"
-                                android:background="@drawable/icon_complain"/>
-
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Complain"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/activity_log"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:src="@drawable/icon_activity_log"
-                                android:scaleType="fitCenter"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Activity Log"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="start"
-                    android:layout_marginTop="10dp"
-                    android:weightSum="4">
-
-                    <LinearLayout
-                        android:id="@+id/member_layout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/members_btn"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/icon_member"
-                                android:scaleType="fitCenter"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Member"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/event_mng_layout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-
-                            <ImageView
-                                android:id="@+id/event_mng_btn"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/icon_manage_event"
-                                android:scaleType="fitCenter"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Manage Event"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/message_layout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-                            <ImageView
-                                android:id="@+id/message_btn"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/icon_message" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Message"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/post_mng_layout"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:orientation="vertical"
-                            android:gravity="center"
-                            >
-                            <ImageView
-                                android:id="@+id/post_mng_btn"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:scaleType="fitCenter"
-                                android:src="@drawable/icon_manage_post" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Manage Post"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-
-                            android:fontFamily="@font/bdclean"
-                            android:textAllCaps="false"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/home_card_2">
-
-                    <TextView
-                        android:text="Others"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:background="@drawable/home_text_layout"
-                        android:backgroundTint="@color/green_5"
-                        android:gravity="center_vertical"
-                        android:fontFamily="@font/bdclean"
-                        android:paddingHorizontal="10dp"
-                        android:layout_marginVertical="10dp"
-                        android:layout_gravity="start"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="4"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-
-                            <LinearLayout
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                >
-                                <ImageView
-                                    android:id="@+id/store_btn"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:src="@drawable/store_btn"
-                                    android:scaleType="fitCenter"/>
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Store"
-                                android:textColor="@color/white"
-                                android:gravity="center"
-                                android:textSize="10sp"
-                                android:fontFamily="@font/bdclean"
-                                android:textAllCaps="false"/>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-
-                            <LinearLayout
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:orientation="vertical"
-                                android:gravity="center"
-                                >
-                                <ImageView
-                                    android:id="@+id/vote_btn"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:src="@drawable/icon_election"
-                                    android:scaleType="fitCenter"/>
-
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Election"
-                                android:textColor="@color/white"
-                                android:gravity="center"
-                                android:textSize="10sp"
-                                android:fontFamily="@font/bdclean"
-                                android:textAllCaps="false"/>
-
-                        </LinearLayout>
-
-
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
-        </androidx.cardview.widget.CardView>
-
-
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavView"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/green_2Dark"
-            android:elevation="15dp"
-            android:visibility="visible"
-            app:itemIconSize="22dp"
-            app:itemIconTint="@color/white"
-            app:labelVisibilityMode="selected"
-            app:itemPaddingBottom="2dp"
-            app:menu="@menu/bottom_nav_menu"/>
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bottomNavView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:background="@color/green_dark"-->
+<!--            android:elevation="15dp"-->
+<!--            android:visibility="visible"-->
+<!--            app:itemIconSize="22dp"-->
+<!--            app:itemIconTint="@color/white"-->
+<!--            app:labelVisibilityMode="selected"-->
+<!--            app:itemPaddingBottom="2dp"-->
+<!--            app:menu="@menu/bottom_nav_menu"/>-->
 
     </RelativeLayout>
 
@@ -835,10 +370,9 @@
         android:layout_height="match_parent"
         android:id="@+id/nav_menu"
         app:menu="@menu/main_menu"
-        android:layout_marginBottom="60dp"
         app:headerLayout="@layout/main_menu_header"
         android:paddingBottom="96dp"
-        app:itemIconTint="@color/green_1"
+        app:itemIconTint="@color/green_2"
         android:layout_gravity="start"
         android:visibility="visible"/>
 
