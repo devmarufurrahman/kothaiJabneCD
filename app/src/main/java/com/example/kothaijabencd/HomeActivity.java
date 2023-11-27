@@ -11,9 +11,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+
 
 public class HomeActivity extends AppCompatActivity {
     NavigationView navigationView;
@@ -22,11 +27,29 @@ public class HomeActivity extends AppCompatActivity {
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
 
+    ImageSlider imageSlider;
+    ArrayList<SlideModel> imageList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        imageSlider = findViewById(R.id.imgSlider);
+
+
+        // image slider here
+
+
+        imageList.add(new SlideModel(R.drawable.img_slide3, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.img_slide2, ScaleTypes.CENTER_CROP));
+        imageList.add(new SlideModel(R.drawable.slide_img1, ScaleTypes.CENTER_CROP));
+
+
+
+
+        imageSlider.setImageList(imageList);
+
 
 
         toolbar = findViewById(R.id.custom_toolbar);
@@ -58,6 +81,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 
 

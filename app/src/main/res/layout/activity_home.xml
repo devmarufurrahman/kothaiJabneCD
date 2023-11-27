@@ -20,7 +20,7 @@
             android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@color/red"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:title="@string/app_name"
             app:titleTextAppearance="@style/Toolbar.TitleText"
@@ -159,8 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
-            app:cardMaxElevation="8dp"
-            app:contentPaddingTop="15dp"
+            app:cardMaxElevation="4dp"
             app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
@@ -168,31 +167,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:paddingBottom="4dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:layout_gravity="start"
-                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:paddingHorizontal="10dp"
+                        android:paddingTop="4dp"
                         android:text="Our Services"
                         android:textStyle="bold"
                         android:textAllCaps="false"
                         android:textColor="@color/black"
-                        android:textSize="19sp" />
+                        android:textSize="16sp" />
 
                     <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:layout_marginRight="5dp"
-                        android:layout_marginBottom="15dp"
                             android:weightSum="4"
+                        android:layout_marginHorizontal="5dp"
                             android:layout_gravity="center"
                             android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/ride_share_btn"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -206,7 +206,7 @@
                                     android:gravity="center"
                                     >
                                     <ImageView
-                                        android:id="@+id/ride_share_btn"
+                                        android:id="@+id/ride_share"
                                         android:layout_width="50dp"
                                         android:layout_height="70dp"
                                         android:src="@drawable/ride_share"
@@ -227,6 +227,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/parcel_delivery_btn"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -242,7 +243,7 @@
                                     android:gravity="center"
                                     >
                                     <ImageView
-                                        android:id="@+id/parcel_delivery_btn"
+                                        android:id="@+id/parcel_delivery"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:src="@drawable/percel_delivery"
@@ -262,6 +263,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/food_btn"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -276,7 +278,7 @@
                                     >
 
                                     <ImageView
-                                        android:id="@+id/food_delivery_btn"
+                                        android:id="@+id/food_btn"
                                         android:layout_width="50dp"
                                         android:layout_height="50dp"
                                         android:src="@drawable/food_delivery"
@@ -295,6 +297,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/medicine_btn"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
@@ -308,7 +311,6 @@
                                     android:gravity="center"
                                     >
                                     <ImageView
-                                        android:id="@+id/member_status"
                                         android:layout_width="50dp"
                                         android:layout_height="40dp"
                                         android:src="@drawable/medicine_delivery"
@@ -342,6 +344,239 @@
 
         </androidx.cardview.widget.CardView>
 
+        <com.denzcoskun.imageslider.ImageSlider
+            android:layout_marginTop="10dp"
+            android:id="@+id/imgSlider"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:paddingStart="60dp"
+            android:paddingEnd="60dp"
+            android:layout_below="@+id/home_card"
+            />
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/home_card_2"
+            android:layout_below="@+id/imgSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            app:cardMaxElevation="4dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:id="@+id/layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="4dp"
+                    android:text="Administration Activity"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:weightSum="4"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/rider_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/ride_share"
+                                android:scaleType="fitCenter"/>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage Rider"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+
+                            android:textAllCaps="true"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/manage_delivery_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/percel_delivery"
+                                android:scaleType="fitCenter"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage Delivery"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textAllCaps="true"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/activity_log_btn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/food_delivery"
+                                android:scaleType="centerInside"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Activity Log"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textAllCaps="true"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/manage_ride_share"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/medicine_delivery"
+                                android:scaleType="fitCenter"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage Ride Share"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textAllCaps="true"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="4"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:id="@+id/manage_user"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/medicine_delivery"
+                                android:scaleType="fitCenter"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Manage User"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+                            android:textAllCaps="true"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
 
