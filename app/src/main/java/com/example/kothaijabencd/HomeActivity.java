@@ -2,8 +2,12 @@ package com.example.kothaijabencd;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -29,29 +33,28 @@ public class HomeActivity extends AppCompatActivity {
 
     ImageSlider imageSlider;
     ArrayList<SlideModel> imageList = new ArrayList<>();
+    LinearLayout ride_share_btn, parcel_delivery_btn, food_btn, medicine_btn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // id define
         imageSlider = findViewById(R.id.imgSlider);
+        ride_share_btn = findViewById(R.id.ride_share_btn);
+        parcel_delivery_btn = findViewById(R.id.parcel_delivery_btn);
+        food_btn = findViewById(R.id.food_btn);
+        medicine_btn =findViewById(R.id.medicine_btn);
 
 
         // image slider here
-
-
         imageList.add(new SlideModel(R.drawable.img_slide3, ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel(R.drawable.img_slide2, ScaleTypes.CENTER_CROP));
         imageList.add(new SlideModel(R.drawable.slide_img1, ScaleTypes.CENTER_CROP));
-
-
-
-
         imageSlider.setImageList(imageList);
 
-
-
+        // toolbar
         toolbar = findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
         navigationView= findViewById(R.id.nav_menu);
@@ -65,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 //        bottomNavigationView.setSelectedItemId(R.id.location);
 //        bottomNavigationView.setItemIconTintList(null);
 
-
+//      navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -80,11 +83,39 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        // ride share btn click
+        ride_share_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, RideShare.class);
+                startActivity(intent);
+            }
+        });
+
+
+        // food delivery activity
+        food_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, FoodDeliveryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        // medicine Delivery activity
+        medicine_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, MedicineDeliveryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
-
-
-
-
 
 
 

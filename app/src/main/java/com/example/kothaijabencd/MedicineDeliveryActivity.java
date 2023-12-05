@@ -4,33 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class RideShare extends AppCompatActivity {
+public class MedicineDeliveryActivity extends AppCompatActivity {
 
-    Button findRider;
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ride_share);
+        setContentView(R.layout.activity_medicine_delivery);
         toolbar = findViewById(R.id.custom_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //id define
-        findRider = findViewById(R.id.findRiderBtn);
-
-        findRider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RideShare.this, RideShareLocation.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

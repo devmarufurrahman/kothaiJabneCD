@@ -2,4 +2,16 @@
     <string name="app_name">Kothai Jaben CD</string>
     <string name="open">OPEN.</string>
     <string name="close">CLOSE</string>
+    <string name="title_activity_ride_share_location">RideShareLocation</string>
+    <string name="place_order">Place Order</string>
+    <string name="details">Details</string>
+    <string name="amount_of_food">Amount of food</string>
+    <string name="restaurant_address">Restaurant Address</string>
+    <string name="restaurant_name">Restaurant Name</string>
+    <string name="food_name">Food Name</string>
+    <string name="food_delivery_booking">Food Delivery Booking</string>
+    <string name="please_attachment_prescription">Please Attachment Prescription</string>
+    <string name="refrence_doctor_name">Refrence Doctor Name</string>
+    <string name="patient_address">Patient Address</string>
+    <string name="patient_name">Patient Name</string>
 </resources>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MedicineDeliveryActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Medicine Booking"
+        app:titleTextColor="@color/black"
+        android:background="@color/red"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            >
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/patient_name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:elevation="3dp"
+                android:padding="10dp"
+                android:background="@drawable/edit_shape"
+                android:layout_marginVertical="10dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/patient_address"
+                android:inputType="date"
+                android:minHeight="48dp"
+                android:elevation="3dp"
+                android:padding="10dp"
+                android:background="@drawable/edit_shape"
+                android:layout_marginVertical="10dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/refrence_doctor_name"
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:elevation="3dp"
+                android:padding="10dp"
+                android:background="@drawable/edit_shape"
+                android:layout_marginVertical="10dp"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/details"
+                android:inputType="text"
+                android:minHeight="100dp"
+                android:elevation="3dp"
+                android:padding="10dp"
+                android:background="@drawable/edit_shape"
+                android:layout_marginVertical="10dp"
+                android:gravity="start"
+                />
+
+
+            <RelativeLayout
+                android:layout_marginVertical="20dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/edit_shape"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/please_attachment_prescription"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:padding="10dp"
+                    android:layout_alignParentStart="true"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"/>
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/member_photo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/camera_upload" />
+
+            </RelativeLayout>
+
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/place_order"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/button_shape"
+                app:backgroundTint="@color/red_dark"
+                android:layout_marginBottom="30dp"
+
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
