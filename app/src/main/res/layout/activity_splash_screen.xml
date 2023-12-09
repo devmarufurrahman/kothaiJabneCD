@@ -6,26 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/color_3"
+    android:background="@color/red"
     android:gravity="center"
-    android:padding="20dp"
     tools:context=".SplashScreen">
 
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:src="@drawable/cover_pic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash_screen_logo"
         android:layout_gravity="center"
+        android:scaleType="fitCenter"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kothai Jaben CD"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Kothai Jaben CD"-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@color/black"-->
+<!--        />-->
 
 </LinearLayout>

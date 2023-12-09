@@ -115,6 +115,16 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+        // percel delivery activity
+        parcel_delivery_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PercelDeliveryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
 

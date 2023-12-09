@@ -14,4 +14,11 @@
     <string name="refrence_doctor_name">Refrence Doctor Name</string>
     <string name="patient_address">Patient Address</string>
     <string name="patient_name">Patient Name</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="shop_address">Shop Address</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_quantity">Product quantity</string>
+    <string name="product_type">Product Type</string>
+    <string name="place_of_product_delivery">Place of product delivery</string>
+    <string name="product_delivery_time">Product delivery time</string>
 </resources>
