@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="@string/food_delivery_booking"
-        app:titleTextColor="@color/black"
+        app:titleTextColor="@color/white"
         android:background="@color/red"
         />
 
@@ -35,6 +35,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/restaurant_name"
                 android:inputType="text"
+                android:textColorHint="@color/hintColor"
                 android:minHeight="48dp"
                 android:elevation="3dp"
                 android:padding="10dp"
@@ -60,6 +62,7 @@
                 android:inputType="date"
                 android:minHeight="48dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -72,6 +75,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -84,6 +88,7 @@
                 android:inputType="text"
                 android:minHeight="100dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -100,6 +105,8 @@
                 android:background="@drawable/button_shape"
                 app:backgroundTint="@color/red_dark"
                 android:layout_marginBottom="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
 
                 />
 

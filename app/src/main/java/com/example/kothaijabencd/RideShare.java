@@ -105,6 +105,7 @@ public class RideShare extends AppCompatActivity {
                         // Set position of marker
                         markerOptions.position(latLng);
                         googleMap.isBuildingsEnabled();
+                        googleMap.addMarker(markerOptions);
                         // Set title of marker
                         markerOptions.title("Current Location");
 

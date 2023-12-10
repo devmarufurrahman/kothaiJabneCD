@@ -13,93 +13,91 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Medicine Booking"
-        app:titleTextColor="@color/black"
+        app:titleTextColor="@color/white"
         android:background="@color/red"
         />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="10dp"
-            >
+            android:orientation="vertical">
 
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/edit_shape"
+                android:elevation="3dp"
                 android:hint="@string/patient_name"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:elevation="3dp"
                 android:padding="10dp"
-                android:background="@drawable/edit_shape"
-                android:layout_marginVertical="10dp"
-                />
+                android:textColorHint="@color/hintColor" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/edit_shape"
+                android:elevation="3dp"
                 android:hint="@string/patient_address"
                 android:inputType="date"
                 android:minHeight="48dp"
-                android:elevation="3dp"
                 android:padding="10dp"
-                android:background="@drawable/edit_shape"
-                android:layout_marginVertical="10dp"
-                />
+                android:textColorHint="@color/hintColor" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/edit_shape"
+                android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:hint="@string/refrence_doctor_name"
                 android:inputType="text"
                 android:minHeight="48dp"
-                android:elevation="3dp"
-                android:padding="10dp"
-                android:background="@drawable/edit_shape"
-                android:layout_marginVertical="10dp"
-                />
+                android:padding="10dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/edit_shape"
+                android:elevation="3dp"
+                android:gravity="start"
+                android:textColorHint="@color/hintColor"
                 android:hint="@string/details"
                 android:inputType="text"
                 android:minHeight="100dp"
-                android:elevation="3dp"
-                android:padding="10dp"
-                android:background="@drawable/edit_shape"
-                android:layout_marginVertical="10dp"
-                android:gravity="start"
-                />
+                android:padding="10dp" />
 
 
             <RelativeLayout
-                android:layout_marginVertical="20dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginVertical="20dp"
                 android:background="@drawable/edit_shape"
+                android:orientation="horizontal"
                 android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
                     android:text="@string/please_attachment_prescription"
+                    android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:padding="10dp"
-                    android:layout_alignParentStart="true"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"/>
+                    android:textStyle="bold" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/member_photo"
@@ -117,17 +115,17 @@
             </RelativeLayout>
 
 
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/place_order"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/button_shape"
-                app:backgroundTint="@color/red_dark"
                 android:layout_marginBottom="30dp"
-
+                android:background="@drawable/button_shape"
+                android:text="@string/place_order"
+                app:backgroundTint="@color/red_dark"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 />
 
         </LinearLayout>

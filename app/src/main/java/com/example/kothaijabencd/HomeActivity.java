@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageSlider imageSlider;
     ArrayList<SlideModel> imageList = new ArrayList<>();
     LinearLayout ride_share_btn, parcel_delivery_btn, food_btn, medicine_btn;
+    ImageView notificationImg;
 
 
     @Override
@@ -46,6 +48,7 @@ public class HomeActivity extends AppCompatActivity {
         parcel_delivery_btn = findViewById(R.id.parcel_delivery_btn);
         food_btn = findViewById(R.id.food_btn);
         medicine_btn =findViewById(R.id.medicine_btn);
+        notificationImg = findViewById(R.id.notificationImg);
 
 
         // image slider here
@@ -83,6 +86,16 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+        // notification view
+        notificationImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+            }
+        });
+
 
 
         // ride share btn click

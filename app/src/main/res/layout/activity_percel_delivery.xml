@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:title="Parcel Booking"
-        app:titleTextColor="@color/black"
+        app:titleTextColor="@color/white"
         android:background="@color/red"
         />
 
@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/shop_name"
                 android:inputType="text"
+                android:textColorHint="@color/hintColor"
                 android:minHeight="48dp"
                 android:elevation="3dp"
                 android:padding="10dp"
@@ -47,6 +48,7 @@
                 android:hint="@string/shop_address"
                 android:inputType="text"
                 android:minHeight="48dp"
+                android:textColorHint="@color/hintColor"
                 android:elevation="3dp"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
@@ -59,6 +61,7 @@
                 android:hint="@string/product_name"
                 android:inputType="date"
                 android:minHeight="48dp"
+                android:textColorHint="@color/hintColor"
                 android:elevation="3dp"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
@@ -71,6 +74,7 @@
                 android:hint="@string/product_quantity"
                 android:inputType="text"
                 android:minHeight="48dp"
+                android:textColorHint="@color/hintColor"
                 android:elevation="3dp"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
@@ -84,6 +88,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -96,6 +101,7 @@
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
                 android:padding="10dp"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
@@ -109,6 +115,7 @@
                 android:minHeight="48dp"
                 android:elevation="3dp"
                 android:padding="10dp"
+                android:textColorHint="@color/hintColor"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
                 />
@@ -121,6 +128,7 @@
                 android:minHeight="100dp"
                 android:elevation="3dp"
                 android:padding="10dp"
+                android:textColorHint="@color/hintColor"
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
                 android:gravity="start"
@@ -136,6 +144,8 @@
                 android:background="@drawable/button_shape"
                 app:backgroundTint="@color/red_dark"
                 android:layout_marginBottom="30dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
 
                 />
 
