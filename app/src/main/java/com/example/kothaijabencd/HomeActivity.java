@@ -92,7 +92,8 @@ public class HomeActivity extends AppCompatActivity {
         notificationImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(HomeActivity.this, NotificationView.class);
+                startActivity(intent);
             }
         });
 

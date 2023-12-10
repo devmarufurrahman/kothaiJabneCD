@@ -44,8 +44,9 @@ public class RideShare extends AppCompatActivity {
     Toolbar toolbar;
     TextView toast_message, latitude, longitude;
     SupportMapFragment mapFragment;
-    String event_longitude, event_latitude;
+    String event_longitude, event_latitude, address;
     double user_latitude, user_longitude;
+
 
     FusedLocationProviderClient fusedLocationProviderClient;
     Dialog dialog;
@@ -122,9 +123,11 @@ public class RideShare extends AppCompatActivity {
                                         List<Address> addressList = geocoder.getFromLocationName(placeName, 1);
 
                                         if (!addressList.isEmpty()) {
-                                            Address address = addressList.get(0);
-                                            double place_latitude = address.getLatitude();
-                                            double place_longitude = address.getLongitude();
+                                            Address addresss = addressList.get(0);
+                                            double place_latitude = addresss.getLatitude();
+                                            double place_longitude = addresss.getLongitude();
+
+                                            address = addressList.get(0).getAddressLine(0);
 
                                             LatLng latLng = new LatLng(place_latitude, place_longitude);
 
@@ -165,7 +168,7 @@ public class RideShare extends AppCompatActivity {
                                 event_latitude = String.valueOf(latLng.latitude);
                                 event_longitude = String.valueOf(latLng.longitude);
 
-                                latitude.setText("latitude = " + event_latitude);
+                                latitude.setText("Current Destination = " + address);
                                 longitude.setText("Longitude = " + event_longitude);
 
 
@@ -239,6 +242,8 @@ public class RideShare extends AppCompatActivity {
 
                         user_latitude = addressList.get(0).getLatitude();
                         user_longitude = addressList.get(0).getLongitude();
+                         address = addressList.get(0).getAddressLine(0);
+
 
                     }
                     catch (IOException e) {
