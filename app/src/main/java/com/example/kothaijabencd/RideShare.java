@@ -42,8 +42,8 @@ public class RideShare extends AppCompatActivity {
 
     Button findRider, selectDestination;
     Toolbar toolbar;
-    TextView toast_message, latitude, longitude;
-    SupportMapFragment mapFragment;
+    TextView  latitude, longitude;
+
     String event_longitude, event_latitude, address;
     double user_latitude, user_longitude;
 
@@ -72,8 +72,7 @@ public class RideShare extends AppCompatActivity {
         findRider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RideShare.this, RideShareLocation.class);
-                startActivity(intent);
+
             }
         });
 
@@ -82,133 +81,10 @@ public class RideShare extends AppCompatActivity {
         selectDestination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Marker[] mMarker = {null};
-                dialog = new Dialog(RideShare.this);
-                dialog.setContentView(R.layout.google_map_dialog_layout);
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.setCancelable(false);
-                dialog.show();
-
-                EditText map_search = dialog.findViewById(R.id.map_search);
-                Button search_btn = dialog.findViewById(R.id.search_map_btn);
-                Button close_map = dialog.findViewById(R.id.close_map);
-
-                mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-                mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        // Customize the map settings
-                        // You can add markers, set the camera position, enable/disable gestures, etc.
-                        LatLng latLng = new LatLng(user_latitude, user_longitude);
-                        //LatLng latLng = new LatLng(23.64184558104228, 88.63826319419519);
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        // Set position of marker
-                        markerOptions.position(latLng);
-                        googleMap.isBuildingsEnabled();
-                        googleMap.addMarker(markerOptions);
-                        // Set title of marker
-                        markerOptions.title("Current Location");
-
-                        final Marker[] previousMarker = {null};
-
-                        search_btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                String placeName = map_search.getText().toString().trim();
-
-                                if (!placeName.isEmpty()) {
-                                    Geocoder geocoder = new Geocoder(RideShare.this);
-                                    try {
-                                        List<Address> addressList = geocoder.getFromLocationName(placeName, 1);
-
-                                        if (!addressList.isEmpty()) {
-                                            Address addresss = addressList.get(0);
-                                            double place_latitude = addresss.getLatitude();
-                                            double place_longitude = addresss.getLongitude();
-
-                                            address = addressList.get(0).getAddressLine(0);
-
-                                            LatLng latLng = new LatLng(place_latitude, place_longitude);
-
-                                            googleMap.clear(); // Clear previous markers
-                                            googleMap.addMarker(new MarkerOptions().position(latLng).title(placeName));
-                                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
-
-
-                                            event_latitude = String.valueOf(place_latitude);
-                                            event_longitude = String.valueOf(place_longitude);
-
-                                            latitude.setText("latitude = " + event_latitude);
-                                            longitude.setText("Longitude = " + event_longitude);
-
-                                            Toast.makeText(RideShare.this, "EVENT LATITUDE = " + event_latitude + "EVENT LONGITUDE = " + event_longitude, Toast.LENGTH_SHORT).show();
-
-                                        } else {
-                                            Toast.makeText(RideShare.this, "No results found for the specified place", Toast.LENGTH_SHORT).show();
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                        Toast.makeText(RideShare.this, "Error occurred while searching for the place", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Toast.makeText(RideShare.this, "Please enter a place name", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-                        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                            @Override
-                            public void onMapClick(LatLng latLng) {
-                                // Remove the previous marker if it exists
-                                if (previousMarker[0] != null) {
-                                    previousMarker[0].remove();
-                                }
-
-                                event_latitude = String.valueOf(latLng.latitude);
-                                event_longitude = String.valueOf(latLng.longitude);
-
-                                latitude.setText("Current Destination = " + address);
-                                longitude.setText("Longitude = " + event_longitude);
-
-
-                                MarkerOptions clickedMarkerOptions = new MarkerOptions();
-                                clickedMarkerOptions.position(latLng);
-                                clickedMarkerOptions.title("Destination Location");
-                                previousMarker[0] = googleMap.addMarker(clickedMarkerOptions);
-                            }
-                        });
-
-                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(RideShare.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-                        }
-                        googleMap.setMyLocationEnabled(false);
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,17.0f));
-                        googleMap.addMarker(markerOptions);
-
-                    }
-                });
-
-                close_map.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        removeMapFragment();
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        removeMapFragment();
-                    }
-                });
-
-                dialog.show();
-
+                Intent intent = new Intent(RideShare.this, RideShareLocation.class);
+                startActivity(intent);
             }
         });
-
 
     }
 
@@ -265,3 +141,50 @@ public class RideShare extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+//
+//
+//        search_btn.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View v) {
+//        String placeName = map_search.getText().toString().trim();
+//
+//        if (!placeName.isEmpty()) {
+//        Geocoder geocoder = new Geocoder(RideShare.this);
+//        try {
+//        List<Address> addressList = geocoder.getFromLocationName(placeName, 1);
+//
+//        if (!addressList.isEmpty()) {
+//        Address addresss = addressList.get(0);
+//        double place_latitude = addresss.getLatitude();
+//        double place_longitude = addresss.getLongitude();
+//
+//        address = addressList.get(0).getAddressLine(0);
+//
+//        LatLng latLng = new LatLng(place_latitude, place_longitude);
+//
+//        googleMap.clear(); // Clear previous markers
+//        googleMap.addMarker(new MarkerOptions().position(latLng).title(placeName));
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
+//
+//
+//        event_latitude = String.valueOf(place_latitude);
+//        event_longitude = String.valueOf(place_longitude);
+//
+//        latitude.setText("latitude = " + event_latitude);
+//        longitude.setText("Longitude = " + event_longitude);
+//
+//        Toast.makeText(RideShare.this, "EVENT LATITUDE = " + event_latitude + "EVENT LONGITUDE = " + event_longitude, Toast.LENGTH_SHORT).show();
+//
+//        } else {
+//        Toast.makeText(RideShare.this, "No results found for the specified place", Toast.LENGTH_SHORT).show();
+//        }
+//        } catch (IOException e) {
+//        e.printStackTrace();
+//        Toast.makeText(RideShare.this, "Error occurred while searching for the place", Toast.LENGTH_SHORT).show();
+//        }
+//        } else {
+//        Toast.makeText(RideShare.this, "Please enter a place name", Toast.LENGTH_SHORT).show();
+//        }
+//        }
+//        });
