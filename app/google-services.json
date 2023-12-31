@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "136944150642",
+    "project_id": "kothai-jaben-cd-380d4",
+    "storage_bucket": "kothai-jaben-cd-380d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136944150642:android:e6e72c7c1e3fa7fc713aeb",
+        "android_client_info": {
+          "package_name": "com.example.kothaijabencd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7IHc3VjqfBCeIwsPkoJQ8mrh475PFtrY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

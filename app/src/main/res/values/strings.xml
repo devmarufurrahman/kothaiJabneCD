@@ -21,4 +21,6 @@
     <string name="product_type">Product Type</string>
     <string name="place_of_product_delivery">Place of product delivery</string>
     <string name="product_delivery_time">Product delivery time</string>
+    <string name="passenger">passenger</string>
+    <string name="driver">Driver</string>
 </resources>
