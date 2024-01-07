@@ -19,6 +19,15 @@
         android:theme="@style/Theme.KothaiJabenCD"
         tools:targetApi="31">
         <activity
+            android:name=".UserReg"
+            android:exported="false" />
+        <activity
+            android:name=".DeliveryManReg"
+            android:exported="false" />
+        <activity
+            android:name=".RiderReg"
+            android:exported="false" />
+        <activity
             android:name=".PassengerOrDriver"
             android:exported="false" />
         <activity

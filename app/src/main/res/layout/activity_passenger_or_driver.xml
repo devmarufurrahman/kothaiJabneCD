@@ -34,19 +34,19 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="350dp"
         android:src="@drawable/driver_passenger_img"
+        android:layout_marginVertical="20dp"
         />
 
 
     <Button
+        android:id="@+id/deliveryManReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/button_shape"
-        android:text="@string/driver"
+        android:text="@string/delivery_man"
         app:backgroundTint="@color/red_dark"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -54,12 +54,27 @@
 
 
     <Button
+        android:id="@+id/riderReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
-        android:text="@string/passenger"
+        android:text="@string/rider"
+        app:backgroundTint="@color/red_dark"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
+
+
+    <Button
+        android:id="@+id/userReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/general_user"
         app:backgroundTint="@color/red_dark"
         android:textColor="@color/white"
         android:textStyle="bold"
