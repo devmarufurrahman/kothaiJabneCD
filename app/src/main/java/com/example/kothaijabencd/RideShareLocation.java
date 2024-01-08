@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +18,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codebyashish.googledirectionapi.AbstractRouting;
@@ -47,15 +50,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RideShareLocation extends FragmentActivity implements OnMapReadyCallback, RouteListener {
+public class RideShareLocation extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
     private ActivityRideShareLocationBinding binding;
-    String event_longitude, event_latitude;
-    double lastLat, lastLong;
+    String event_longitude, event_latitude, address;
+    double lastLat, lastLong, user_latitude, user_longitude;
     private  LatLng destinationLocation, userLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    private ArrayList<Polyline> polylines = null;
+    TextView destination_area, selectedOrNot;
+    Button backRideShare;
+    float km;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,11 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
 
         binding = ActivityRideShareLocationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // id selection
+        destination_area = findViewById(R.id.destination_area);
+        selectedOrNot = findViewById(R.id.selectedOrNot);
+        backRideShare = findViewById(R.id.backRideShare);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -73,6 +83,17 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        backRideShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RideShareLocation.this, RideShare.class);
+                intent.putExtra("distance",km);
+                intent.putExtra("destination",address);
+                startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            }
+        });
 
     }
 
@@ -99,7 +120,7 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
                 
                 
                 // route method
-                getRoute(userLocation, destinationLocation);
+                getCalculateRoute();
                 
             }
         });
@@ -107,15 +128,7 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
         fetchMyLocation();
     }
 
-    private void getRoute(LatLng userLocation, LatLng destinationLocation) {
-        RouteDrawing routeDrawing = new RouteDrawing.Builder()
-                .context(RideShareLocation.this)  // pass your activity or fragment's context
-                .travelMode(AbstractRouting.TravelMode.BIKING)
-                .withListener(this).alternativeRoutes(true)
-                .waypoints(userLocation, destinationLocation)
-                .build();
-        routeDrawing.execute();
-    }
+
 
     private void fetchMyLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -134,7 +147,7 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
 
                 CameraPosition cameraPosition = new CameraPosition.Builder()
                         .target(latLng)
-                        .zoom(18.0f)
+                        .zoom(16.0f)
                         .build();
 
                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -154,43 +167,43 @@ public class RideShareLocation extends FragmentActivity implements OnMapReadyCal
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    @Override
-    public void onRouteFailure(ErrorHandling e) {
-        Toast.makeText(this, "Route error", Toast.LENGTH_SHORT).show();
-        Log.d("Error", String.valueOf(e));
-    }
 
-    @Override
-    public void onRouteStart() {
-        Toast.makeText(this, "Route start", Toast.LENGTH_SHORT).show();
+    private void getCalculateRoute() {
 
-    }
+        Location startPoint=new Location("Start Point");
+        startPoint.setLatitude(lastLat);
+        startPoint.setLongitude(lastLong);
 
-    @Override
-    public void onRouteSuccess(ArrayList<RouteInfoModel> list, int indexing) {
-        Toast.makeText(this, "Route success", Toast.LENGTH_SHORT).show();
-        if (polylines != null) {
-            polylines.clear();
+        Location endPoint=new Location("End Point");
+        endPoint.setLatitude(destinationLocation.latitude);
+        endPoint.setLongitude(destinationLocation.longitude);
+
+
+
+        double distance=startPoint.distanceTo(endPoint);
+        km = (float) (distance / 1000);
+
+        Log.d("distance", String.valueOf(km));
+        Log.d("distanc", String.valueOf(distance));
+
+        Geocoder geocoder = new Geocoder(this);
+        try {
+            List<Address> addressList = geocoder.getFromLocation(destinationLocation.latitude,destinationLocation.longitude,1);
+
+            user_latitude = addressList.get(0).getLatitude();
+            user_longitude = addressList.get(0).getLongitude();
+            address = addressList.get(0).getAddressLine(0);
+
+            System.out.println(address + "name");
+            destination_area.setText("Area: "+ address);
+            selectedOrNot.setText("Your destination is selected");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        PolylineOptions polylineOptions = new PolylineOptions();
-        ArrayList<Polyline> polylines = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (i == indexing) {
-                Log.e("TAG", "onRoutingSuccess: routeIndexing" + indexing);
-                polylineOptions.color(Color.BLACK);
-                polylineOptions.width(12);
-                polylineOptions.addAll(list.get(indexing).getPoints());
-                polylineOptions.startCap(new RoundCap());
-                polylineOptions.endCap(new RoundCap());
-                Polyline polyline = mMap.addPolyline(polylineOptions);
-                polylines.add(polyline);
-            }
-        }
-    }
+        ;
 
-    @Override
-    public void onRouteCancelled() {
-        Toast.makeText(this, "Route cancel", Toast.LENGTH_SHORT).show();
 
     }
+
 }

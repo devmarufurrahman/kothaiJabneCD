@@ -16,4 +16,42 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         />
 
+    <TextView
+        android:id="@+id/selectedOrNot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your destination is not selected"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginTop="15dp"
+        android:textSize="25sp"
+        />
+
+    <TextView
+        android:id="@+id/destination_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Please Select Area"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_marginVertical="15dp"
+        android:textSize="18sp"
+        />
+
+
+
+    <Button
+        android:id="@+id/backRideShare"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="go back"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_shape"
+        android:layout_marginBottom="30dp"
+
+        />
+
 </LinearLayout>

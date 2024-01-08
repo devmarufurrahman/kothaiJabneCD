@@ -73,37 +73,58 @@
 
 
             <LinearLayout
-                android:layout_below="@+id/coordinate_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
-                android:weightSum="2"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/latitude"
-                    android:layout_width="0dp"
+                    android:id="@+id/currentLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:text="Current Location: N/A"
+                    android:textAllCaps="false"
+                    android:gravity="start"/>
+
+                <TextView
+                    android:id="@+id/destinationLocation"
+                    android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:padding="5dp"
-                    android:text="Latitude"
+                    android:text="Destination Location: N/A"
                     android:textAllCaps="false"
-                    android:gravity="center"/>
+                    android:gravity="start"/>
 
                 <TextView
-                    android:id="@+id/longitude"
-                    android:layout_width="0dp"
+                    android:id="@+id/distance"
+                    android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:padding="5dp"
-                    android:text="Longitude"
+                    android:text="Distance: 0"
                     android:textAllCaps="false"
-                    android:gravity="center"/>
+                    android:gravity="start"/>
+
+                <TextView
+                    android:id="@+id/distanceCost"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:text="Payable: 0.00 Tk"
+                    android:textAllCaps="false"
+                    android:gravity="start"/>
 
             </LinearLayout>
 

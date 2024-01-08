@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,14 +43,12 @@ public class RideShare extends AppCompatActivity {
 
     Button findRider, selectDestination;
     Toolbar toolbar;
-    TextView  latitude, longitude;
+    TextView  currentLocation, destinationLocation, distanceValue, distanceCost;
 
-    String event_longitude, event_latitude, address;
-    double user_latitude, user_longitude;
-
-
+    String destination, event_latitude;
+    float distance;
     FusedLocationProviderClient fusedLocationProviderClient;
-    Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +59,27 @@ public class RideShare extends AppCompatActivity {
         //id define
         findRider = findViewById(R.id.findRiderBtn);
         selectDestination = findViewById(R.id.selectDestination);
-        latitude = findViewById(R.id.latitude);
-        longitude = findViewById(R.id.longitude);
+        currentLocation = findViewById(R.id.currentLocation);
+        destinationLocation = findViewById(R.id.destinationLocation);
+        distanceValue = findViewById(R.id.distance);
+        distanceCost = findViewById(R.id.distanceCost);
+
+        // get intent value
+        Intent getIntent = getIntent();
+        distance = getIntent.getFloatExtra("distance",0);
+        destination = getIntent.getStringExtra("destination");
+//        getIntent.setFlags( Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+        // set intent value
+        if (distance != 0 && !destination.equals("")){
+            distanceValue.setText("Distance: "+ decimalFormat.format(distance) + " km");
+            destinationLocation.setText("Destination Location: "+ destination);
+            getCostRide(distance);
+        }
+
+
 
         // location services
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -88,14 +106,11 @@ public class RideShare extends AppCompatActivity {
 
     }
 
-    private void removeMapFragment() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        if (mapFragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .remove(mapFragment)
-                    .commitAllowingStateLoss();
-        }
+    private void getCostRide(float dis) {
+        float disCost = (int) (dis * 9);
+        distanceCost.setText("Payable: " + disCost +" Tk");
     }
+
 
     // get current location
     private void getCurrentLocation() {
@@ -116,9 +131,9 @@ public class RideShare extends AppCompatActivity {
 
                         //List<Address> addressList = geocoder.getFromLocation(23.755247, 90.393884, 1);
 
-                        user_latitude = addressList.get(0).getLatitude();
-                        user_longitude = addressList.get(0).getLongitude();
-                         address = addressList.get(0).getAddressLine(0);
+//                        user_latitude = addressList.get(0).getLatitude();
+//                        user_longitude = addressList.get(0).getLongitude();
+//                         address = addressList.get(0).getAddressLine(0);
 
 
                     }
