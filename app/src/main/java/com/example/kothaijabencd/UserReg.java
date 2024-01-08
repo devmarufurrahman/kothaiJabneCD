@@ -39,7 +39,7 @@ import java.util.Objects;
 
 public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
     EditText userName, userAddress, userOccupation;
-    Button date_birth, select_gender, select_religion;
+    Button date_birth, select_gender, select_religion, SignUpBtn;
     ShapeableImageView userNid, userProfilePhoto;
     ArrayList<String>  religion,  gender;
     int day, month, year, religion_ref= 0, gender_ref= 0, myday, myMonth, myYear;
@@ -61,6 +61,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         select_religion = findViewById(R.id.select_religion);
         userNid = findViewById(R.id.userNid);
         userProfilePhoto = findViewById(R.id.userProfilePhoto);
+        SignUpBtn = findViewById(R.id.SignUpBtn);
 
 
         // birth day selection
@@ -249,6 +250,76 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
             }
         });
 
+        // select nid
+        userProfilePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Dexter.withActivity(UserReg.this)
+                            .withPermission(Manifest.permission.READ_MEDIA_IMAGES)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse response) {
+
+                                    Intent intent = new Intent(Intent.ACTION_PICK);
+                                    intent.setType("image/*");
+                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 2);
+                                }
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                                    token.continuePermissionRequest();
+                                }
+
+
+                            }).check();
+                } else {
+
+                    Dexter.withActivity(UserReg.this)
+                            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            .withListener(new PermissionListener() {
+                                @Override
+                                public void onPermissionGranted(PermissionGrantedResponse response) {
+
+                                    Intent intent = new Intent(Intent.ACTION_PICK);
+                                    intent.setType("image/*");
+                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 2);
+
+                                }
+                                @Override
+                                public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+                                    token.continuePermissionRequest();
+                                }
+                            }).check();
+                }
+            }
+        });
+
+
+        // sign up event
+        SignUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UserReg.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
     }
 
@@ -267,6 +338,20 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                 InputStream inputStream= getContentResolver().openInputStream(filepath);
                 bitmap= BitmapFactory.decodeStream(inputStream);
                 userNid.setImageBitmap(bitmap);
+                encodeBitmapImage();
+
+            } catch (Exception ex){
+                ex.printStackTrace();
+            }
+        } else if (requestCode==2 && resultCode==RESULT_OK) {
+
+            assert data != null;
+            Uri filepath=data.getData();
+            try {
+
+                InputStream inputStream= getContentResolver().openInputStream(filepath);
+                bitmap= BitmapFactory.decodeStream(inputStream);
+                userProfilePhoto.setImageBitmap(bitmap);
                 encodeBitmapImage();
 
             } catch (Exception ex){
