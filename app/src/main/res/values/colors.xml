@@ -5,6 +5,7 @@
     <color name="app_bg_color">#D1D2D1</color>
     <color name="green_dark">#05560C</color>
     <color name="color_1">#054256</color>
+    <color name="link_color">#3366CC</color>
     <color name="gray">#CDCBC8</color>
     <color name="hintColor">#ACACAC</color>
     <color name="textColor">#7A7A7A</color>

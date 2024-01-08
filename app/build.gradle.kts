@@ -52,4 +52,5 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
     implementation("com.github.dangiashish:Google-Direction-Api:1.6")
+    implementation ("com.karumi:dexter:6.0.2")
 }

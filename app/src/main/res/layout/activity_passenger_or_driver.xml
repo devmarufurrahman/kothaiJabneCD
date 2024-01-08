@@ -41,26 +41,12 @@
 
 
     <Button
-        android:id="@+id/deliveryManReg"
+        android:id="@+id/driverReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/button_shape"
-        android:text="@string/delivery_man"
-        app:backgroundTint="@color/red_dark"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        />
-
-
-    <Button
-        android:id="@+id/riderReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape"
-        android:text="@string/rider"
+        android:text="@string/rider_and_delivery_man"
         app:backgroundTint="@color/red_dark"
         android:textColor="@color/white"
         android:textStyle="bold"

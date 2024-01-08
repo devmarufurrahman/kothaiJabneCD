@@ -101,6 +101,7 @@ public class RideShare extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RideShare.this, RideShareLocation.class);
                 startActivity(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             }
         });
 
