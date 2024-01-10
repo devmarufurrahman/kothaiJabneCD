@@ -38,12 +38,12 @@ import java.util.Calendar;
 import java.util.Objects;
 
 public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
-    EditText userName, userAddress, userOccupation;
+    EditText userName, userAddress, userOccupation, userContact;
     Button date_birth, select_gender, select_religion, SignUpBtn;
     ShapeableImageView userNid, userProfilePhoto;
     ArrayList<String>  religion,  gender;
-    int day, month, year, religion_ref= 0, gender_ref= 0, myday, myMonth, myYear;
-    String birth_date = "", encodedImage = "";
+    int day, month, year, myday, myMonth, myYear;
+    String religion_ref= "", gender_ref= "", birth_date = "", encodedImage = "";
     Bitmap bitmap;
     Dialog dialog;
 
@@ -61,6 +61,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         select_religion = findViewById(R.id.select_religion);
         userNid = findViewById(R.id.userNid);
         userProfilePhoto = findViewById(R.id.userProfilePhoto);
+        userContact = findViewById(R.id.userContact);
         SignUpBtn = findViewById(R.id.SignUpBtn);
 
 
@@ -106,19 +107,19 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                         String item  = adapter.getItem(position);
                         switch (Objects.requireNonNull(item)){
                             case "Male" :
-                                gender_ref = 1;
+                                gender_ref = "Male";
                                 select_gender.setText(item);
                                 select_gender.setError(null);
                                 dialog.dismiss();
                                 break;
                             case "Female" :
-                                gender_ref = 2;
+                                gender_ref = "Female";
                                 select_gender.setText(item);
                                 select_gender.setError(null);
                                 dialog.dismiss();
                                 break;
                             case "Other" :
-                                gender_ref = 3;
+                                gender_ref = "Other";
                                 select_gender.setText(item);
                                 select_gender.setError(null);
                                 dialog.dismiss();
@@ -161,27 +162,27 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                         String item  = adapter.getItem(position);
                         switch (Objects.requireNonNull(item)){
                             case "Islam" :
-                                religion_ref = 1;
+                                religion_ref = "Islam";
                                 select_religion.setText(item);
                                 dialog.dismiss();
                                 break;
                             case "Hinduism" :
-                                religion_ref = 2;
+                                religion_ref = "Hinduism";
                                 select_religion.setText(item);
                                 dialog.dismiss();
                                 break;
                             case "Christianity" :
-                                religion_ref = 3;
+                                religion_ref = "Christianity";
                                 select_religion.setText(item);
                                 dialog.dismiss();
                                 break;
                             case "Buddhism" :
-                                religion_ref = 4;
+                                religion_ref = "Buddhism";
                                 select_religion.setText(item);
                                 dialog.dismiss();
                                 break;
                             case "Other" :
-                                religion_ref = 5;
+                                religion_ref = "Other";
                                 select_religion.setText(item);
                                 dialog.dismiss();
                                 break;
@@ -196,115 +197,15 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         userNid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    Dexter.withActivity(UserReg.this)
-                            .withPermission(Manifest.permission.READ_MEDIA_IMAGES)
-                            .withListener(new PermissionListener() {
-                                @Override
-                                public void onPermissionGranted(PermissionGrantedResponse response) {
-
-                                    Intent intent = new Intent(Intent.ACTION_PICK);
-                                    intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 1);
-                                }
-                                @Override
-                                public void onPermissionDenied(PermissionDeniedResponse response) {
-
-                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                    token.continuePermissionRequest();
-                                }
-
-
-                            }).check();
-                } else {
-
-                    Dexter.withActivity(UserReg.this)
-                            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .withListener(new PermissionListener() {
-                                @Override
-                                public void onPermissionGranted(PermissionGrantedResponse response) {
-
-                                    Intent intent = new Intent(Intent.ACTION_PICK);
-                                    intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 1);
-
-                                }
-                                @Override
-                                public void onPermissionDenied(PermissionDeniedResponse response) {
-
-                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
-                                    token.continuePermissionRequest();
-                                }
-                            }).check();
-                }
+                imageSelection(1);
             }
         });
 
-        // select nid
+        // select profile photo
         userProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    Dexter.withActivity(UserReg.this)
-                            .withPermission(Manifest.permission.READ_MEDIA_IMAGES)
-                            .withListener(new PermissionListener() {
-                                @Override
-                                public void onPermissionGranted(PermissionGrantedResponse response) {
-
-                                    Intent intent = new Intent(Intent.ACTION_PICK);
-                                    intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 2);
-                                }
-                                @Override
-                                public void onPermissionDenied(PermissionDeniedResponse response) {
-
-                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                                    token.continuePermissionRequest();
-                                }
-
-
-                            }).check();
-                } else {
-
-                    Dexter.withActivity(UserReg.this)
-                            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .withListener(new PermissionListener() {
-                                @Override
-                                public void onPermissionGranted(PermissionGrantedResponse response) {
-
-                                    Intent intent = new Intent(Intent.ACTION_PICK);
-                                    intent.setType("image/*");
-                                    startActivityForResult(Intent.createChooser(intent, "Select Image"), 2);
-
-                                }
-                                @Override
-                                public void onPermissionDenied(PermissionDeniedResponse response) {
-
-                                    Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-
-                                    token.continuePermissionRequest();
-                                }
-                            }).check();
-                }
+                imageSelection(2);
             }
         });
 
@@ -313,10 +214,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         SignUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UserReg.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                createUserAccount();
             }
         });
 
@@ -324,8 +222,80 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
     }
 
 
-// select nid image method
 
+    //    get image method
+    private void imageSelection(int REQ_CODE) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Dexter.withActivity(UserReg.this)
+                    .withPermission(Manifest.permission.READ_MEDIA_IMAGES)
+                    .withListener(new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse response) {
+
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");
+                            startActivityForResult(Intent.createChooser(intent, "Select Image"), REQ_CODE);
+                        }
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                            Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                            token.continuePermissionRequest();
+                        }
+
+
+                    }).check();
+        } else {
+
+            Dexter.withActivity(UserReg.this)
+                    .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .withListener(new PermissionListener() {
+                        @Override
+                        public void onPermissionGranted(PermissionGrantedResponse response) {
+
+                            Intent intent = new Intent(Intent.ACTION_PICK);
+                            intent.setType("image/*");
+                            startActivityForResult(Intent.createChooser(intent, "Select Image"), REQ_CODE);
+
+                        }
+                        @Override
+                        public void onPermissionDenied(PermissionDeniedResponse response) {
+
+                            Toast.makeText(UserReg.this, "Permission Denied!!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+
+                            token.continuePermissionRequest();
+                        }
+                    }).check();
+        }
+    }
+
+
+
+
+    // create user method
+    private void createUserAccount() {
+        String name = userName.getText().toString();
+        String contact  = userContact.getText().toString();
+        String address  = userAddress.getText().toString();
+        String occupation  = userOccupation.getText().toString();
+
+        Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(UserReg.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+// set image method
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -386,7 +356,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
     }
 
 
-
+    // set date method
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         myYear = year;

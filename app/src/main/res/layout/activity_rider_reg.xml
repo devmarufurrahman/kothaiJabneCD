@@ -26,7 +26,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <LinearLayout
@@ -34,9 +34,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="10dp"
-            android:layout_gravity="center"
-            android:gravity="center"
             >
+
             <EditText
                 android:id="@+id/riderName"
                 android:layout_width="match_parent"
@@ -51,12 +50,25 @@
                 />
 
 
+            <Button
+                android:id="@+id/date_birthRider"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/date_of_birth"
+                android:textAllCaps="true"
+                android:textColor="@color/link_color"
+                android:textSize="16sp"
+                android:background="@drawable/button_shape_1"
+                />
+
+
             <EditText
-                android:id="@+id/riderAge"
+                android:id="@+id/riderContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="age"
-                android:inputType="number"
+                android:hint="Contact (without +88)"
+                android:inputType="phone"
                 android:minHeight="48dp"
                 android:elevation="3dp"
                 android:textColorHint="@color/hintColor"
@@ -64,7 +76,6 @@
                 android:background="@drawable/edit_shape"
                 android:layout_marginVertical="10dp"
                 />
-
 
             <EditText
                 android:id="@+id/riderAddress"
@@ -114,7 +125,7 @@
                     android:textColor="@color/black"/>
 
                 <Button
-                    android:id="@+id/select_gender"
+                    android:id="@+id/select_gender_rider"
                     android:layout_width="200dp"
                     android:background="@null"
                     android:text="Select Gender"
@@ -147,7 +158,7 @@
                     android:textColor="@color/black"/>
 
                 <Button
-                    android:id="@+id/select_religion"
+                    android:id="@+id/select_religion_rider"
                     android:layout_width="200dp"
                     android:background="@null"
                     android:text="Select Religion"
@@ -183,7 +194,7 @@
                     android:id="@+id/select_transport"
                     android:layout_width="200dp"
                     android:background="@null"
-                    android:text="select trasport"
+                    android:text="select transport"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:drawableEnd="@drawable/icon_dropdown"
@@ -192,92 +203,103 @@
 
             </RelativeLayout>
 
-            <EditText
-                android:id="@+id/riderBikeInfo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bike Info"
-                android:inputType="text"
-                android:minHeight="68dp"
-                android:elevation="3dp"
-                android:textColorHint="@color/hintColor"
-                android:padding="10dp"
-                android:gravity="start"
-                android:background="@drawable/edit_shape"
-                android:layout_marginVertical="10dp"
-                />
+                android:orientation="vertical"
+                android:id="@+id/bikeLayout"
+                android:visibility="gone"
+                >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@drawable/edit_shape"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/riderBikeInfo"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
+                    android:hint="Bike Info"
+                    android:inputType="text"
+                    android:minHeight="68dp"
+                    android:elevation="3dp"
+                    android:textColorHint="@color/hintColor"
                     android:padding="10dp"
-                    android:text="Driving Licence Front Side "
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="start"
+                    android:background="@drawable/edit_shape"
+                    android:layout_marginVertical="10dp"
+                    />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/riderDl"
-                    android:layout_width="80dp"
-                    android:layout_height="120dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/camera_upload" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/edit_shape"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:text="Driving Licence Front Side "
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:background="@drawable/edit_shape"
-                android:orientation="horizontal"
-                android:layout_marginVertical="10dp"
-                android:padding="10dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/riderDl"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/camera_upload" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:padding="10dp"
-                    android:text="Upload Acknowledgement Slip"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                </RelativeLayout>
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/riderBikeSlip"
-                    android:layout_width="80dp"
-                    android:layout_height="120dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/camera_upload" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/edit_shape"
+                    android:orientation="horizontal"
+                    android:layout_marginVertical="10dp"
+                    android:padding="10dp">
 
-            </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+                        android:text="Upload Acknowledgement Slip"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/riderBikeSlip"
+                        android:layout_width="80dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:src="@drawable/camera_upload" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

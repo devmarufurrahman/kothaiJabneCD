@@ -11,15 +11,8 @@
         android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:title=" "
         />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/gray"
-        android:layout_marginBottom="5dp"
-        />
-
 
 
     <TextView

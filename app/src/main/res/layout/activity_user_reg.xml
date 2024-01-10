@@ -59,6 +59,20 @@
 
 
             <EditText
+                android:id="@+id/userContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Contact (without +88)"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                android:elevation="3dp"
+                android:textColorHint="@color/hintColor"
+                android:padding="10dp"
+                android:background="@drawable/edit_shape"
+                android:layout_marginVertical="10dp"
+                />
+
+            <EditText
                 android:id="@+id/userAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
