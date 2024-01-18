@@ -1,5 +1,6 @@
 package com.example.kothaijabencd;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +13,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,9 +25,17 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -36,9 +48,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
-    EditText userName, userAddress, userOccupation, userContact;
+    EditText userName, userAddress, userOccupation, userContact, userEmail, userPass, userPassC;
     Button date_birth, select_gender, select_religion, SignUpBtn;
     ShapeableImageView userNid, userProfilePhoto;
     ArrayList<String>  religion,  gender;
@@ -46,6 +59,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
     String religion_ref= "", gender_ref= "", birth_date = "", encodedImage = "";
     Bitmap bitmap;
     Dialog dialog;
+    ProgressBar progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +76,11 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         userNid = findViewById(R.id.userNid);
         userProfilePhoto = findViewById(R.id.userProfilePhoto);
         userContact = findViewById(R.id.userContact);
+        userEmail = findViewById(R.id.userEmail);
+        userPass = findViewById(R.id.userPass);
+        userPassC = findViewById(R.id.userPassC);
         SignUpBtn = findViewById(R.id.SignUpBtn);
+        progressbar = findViewById(R.id.progressbar);
 
 
         // birth day selection
@@ -287,12 +305,96 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         String contact  = userContact.getText().toString();
         String address  = userAddress.getText().toString();
         String occupation  = userOccupation.getText().toString();
+        String email  = userEmail.getText().toString();
+        String pass  = userPass.getText().toString();
+        String passC  = userPassC.getText().toString();
+
+        if (name.equals("")){
+            userName.setError("Name can't be blank");
+            userName.requestFocus();
+        } else if (birth_date.equals("")) {
+            Toast.makeText(this, "Birthday can't be blank", Toast.LENGTH_SHORT).show();
+            date_birth.setError("Birthday can't be blank");
+        } else if (TextUtils.isEmpty(contact)) {
+            userContact.setError("Contact can't be blank");
+            userContact.requestFocus();
+        } else if (contact.length() != 11) {
+            userContact.setError("Contact is not valid");
+            userContact.requestFocus();
+        } else if (email.equals("")) {
+            userEmail.setError("Email can't be blank");
+            userEmail.requestFocus();
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            userEmail.setError("Email can't valid");
+            userEmail.requestFocus();
+        } else if (pass.equals("") && pass.length() >= 6) {
+            userPass.setError("Password min char 6");
+            userPass.requestFocus();
+        } else if (passC.equals(pass)) {
+            userPassC.setError("Password not matching");
+            userPassC.requestFocus();
+        }  else if (address.equals("")) {
+            userAddress.setError("Address can't be blank");
+            userAddress.requestFocus();
+        } else if (occupation.equals("")) {
+            userOccupation.setError("Occupation can't be blank");
+            userOccupation.requestFocus();
+        } else if (gender_ref.equals("")) {
+            Toast.makeText(this, "Gender can't be blank", Toast.LENGTH_SHORT).show();
+            select_gender.setError("Gender can't be blank");
+        } else if (religion_ref.equals("")) {
+            Toast.makeText(this, "Religion can't be blank", Toast.LENGTH_SHORT).show();
+            select_religion.setError("Religion can't be blank");
+        } else if (encodedImage.equals("")) {
+            Toast.makeText(this, "Image can't be blank", Toast.LENGTH_SHORT).show();
+        } else {
+            progressbar.setVisibility(View.VISIBLE);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(UserReg.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                   if (task.isSuccessful()){
+                       Toast.makeText(UserReg.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                       FirebaseUser firebaseUser = auth.getCurrentUser();
+
+
+//                        send verification email
+                       firebaseUser.sendEmailVerification();
+                       progressbar.setVisibility(View.GONE);
+
+//                       open login system
+                       Intent loginIntent = new Intent(UserReg.this, LoginActivity.class);
+                       loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                       startActivity(loginIntent);
+                       finish();
+
+                   } else {
+                       try {
+                           throw task.getException();
+                       } catch (FirebaseAuthInvalidCredentialsException e){
+                           userEmail.setError("Your email is invalid or already in use. Kindly re-enter");
+                           userEmail.requestFocus();
+                           progressbar.setVisibility(View.GONE);
+                       } catch (FirebaseAuthUserCollisionException e){
+                           userEmail.setError("Your email is already registered. Use another email");
+                           userEmail.requestFocus();
+                           progressbar.setVisibility(View.GONE);
+                       } catch (Exception e){
+                           Log.e("User Auth", "Reg: " + e );
+                           progressbar.setVisibility(View.GONE);
+                       }
+                   }
+                }
+            });
+        }
 
         Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(UserReg.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
+
+
 
 
 // set image method

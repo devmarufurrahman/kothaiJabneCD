@@ -77,6 +77,61 @@
                 android:layout_marginVertical="10dp"
                 />
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                >
+                <EditText
+                    android:id="@+id/riderEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="email"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:elevation="3dp"
+                    android:textColorHint="@color/hintColor"
+                    android:padding="10dp"
+                    android:background="@drawable/edit_shape"
+                    />
+
+
+                <EditText
+                    android:id="@+id/riderPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="password"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:elevation="3dp"
+                    android:textColorHint="@color/hintColor"
+                    android:padding="10dp"
+                    android:background="@drawable/edit_shape"
+                    android:layout_marginVertical="10dp"
+                    />
+
+
+                <EditText
+                    android:id="@+id/riderPassC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="confirm password"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"
+                    android:elevation="3dp"
+                    android:textColorHint="@color/hintColor"
+                    android:padding="10dp"
+                    android:background="@drawable/edit_shape"
+                    />
+
+
+            </LinearLayout>
+
+
             <EditText
                 android:id="@+id/riderAddress"
                 android:layout_width="match_parent"
