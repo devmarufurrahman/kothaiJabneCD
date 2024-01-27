@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +15,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 import android.util.Patterns;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,7 +30,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.kothaijabencd.utils.ReadWriteUserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.AuthResult;
@@ -36,6 +40,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -43,23 +51,31 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDateSetListener{
     EditText userName, userAddress, userOccupation, userContact, userEmail, userPass, userPassC;
     Button date_birth, select_gender, select_religion, SignUpBtn;
     ShapeableImageView userNid, userProfilePhoto;
     ArrayList<String>  religion,  gender;
-    int day, month, year, myday, myMonth, myYear;
-    String religion_ref= "", gender_ref= "", birth_date = "", encodedImage = "";
+    int day, month, year, myday, myMonth, myYear, request_code;
+    String religion_ref= "", gender_ref= "", birth_date = "", encodedNid = "", encodedProfile = "", today;
     Bitmap bitmap;
     Dialog dialog;
     ProgressBar progressbar;
+    FirebaseFirestore firestore;
+    String uuid ;
+    StorageReference storageReference;
+    ArrayList<Pair<Uri, String>> imageUris = new ArrayList<>();
+    Uri nidUri, profileUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +97,8 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         userPassC = findViewById(R.id.userPassC);
         SignUpBtn = findViewById(R.id.SignUpBtn);
         progressbar = findViewById(R.id.progressbar);
+        firestore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference("profile_user");
 
 
         // birth day selection
@@ -215,7 +233,8 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         userNid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageSelection(1);
+                request_code = 1;
+                imageSelection(request_code);
             }
         });
 
@@ -223,7 +242,8 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         userProfilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageSelection(2);
+                request_code = 2;
+                imageSelection(request_code);
             }
         });
 
@@ -330,7 +350,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         } else if (pass.equals("") && pass.length() >= 6) {
             userPass.setError("Password min char 6");
             userPass.requestFocus();
-        } else if (passC.equals(pass)) {
+        } else if (passC == pass) {
             userPassC.setError("Password not matching");
             userPassC.requestFocus();
         }  else if (address.equals("")) {
@@ -345,28 +365,69 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         } else if (religion_ref.equals("")) {
             Toast.makeText(this, "Religion can't be blank", Toast.LENGTH_SHORT).show();
             select_religion.setError("Religion can't be blank");
-        } else if (encodedImage.equals("")) {
+        } else if (nidUri.equals("")) {
+            Toast.makeText(this, "Nid can't be blank", Toast.LENGTH_SHORT).show();
+        } else if (profileUri.equals("")) {
             Toast.makeText(this, "Image can't be blank", Toast.LENGTH_SHORT).show();
         } else {
             progressbar.setVisibility(View.VISIBLE);
             FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                LocalDate date = LocalDate.now();
+                today = date.toString();
+                Log.d("Current Date (update)", today);
+            } else {
+                Date currentDate = new Date();
+
+                // Print the current date in the default format (yyyy-MM-dd)
+                SimpleDateFormat defaultFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                today = defaultFormat.format(currentDate);
+                Log.d("Current Date (Default)", today);
+            }
             auth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(UserReg.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                    if (task.isSuccessful()){
-                       Toast.makeText(UserReg.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                       uuid = firebaseUser.getUid();
+
+//                       user data save in firestore
+                       ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,4);
+                       DocumentReference documentReference = firestore.collection("user_profile").document(uuid);
+
+                       documentReference.set(writeUserDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                           @Override
+                           public void onSuccess(Void unused) {
+                               Toast.makeText(UserReg.this, "Registration Successful " + uuid, Toast.LENGTH_SHORT).show();
+                               Log.d("create uuid", "onSuccess: user is "+ uuid);
+
+//                               save images
+                               if (!nidUri.equals("") && !profileUri.equals("")){
+
+                                   for (Pair<Uri, String> pair : imageUris){
+                                       Uri imgUri = pair.first;
+                                       String name = pair.second;
+                                       StorageReference fileReference  = storageReference.child(uuid + name +"." +
+                                               getFileExtensions(imgUri));
+                                       fileReference.putFile(imgUri);
+                                   }
+                               }
 
 
 //                        send verification email
-                       firebaseUser.sendEmailVerification();
-                       progressbar.setVisibility(View.GONE);
+                               firebaseUser.sendEmailVerification();
+                               progressbar.setVisibility(View.GONE);
+
 
 //                       open login system
-                       Intent loginIntent = new Intent(UserReg.this, LoginActivity.class);
-                       loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                       startActivity(loginIntent);
-                       finish();
+                               Intent loginIntent = new Intent(UserReg.this, LoginActivity.class);
+                               loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                               startActivity(loginIntent);
+                               finish();
+                           }
+
+                       });
+
 
                    } else {
                        try {
@@ -388,29 +449,34 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
             });
         }
 
-        Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(UserReg.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+//        Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(UserReg.this, LoginActivity.class);
+//        startActivity(intent);
+//        finish();
     }
 
+    private String getFileExtensions(Uri filepath) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(filepath));
+    };
 
 
-
-// set image method
+    // set image method
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         if (requestCode==1 && resultCode==RESULT_OK){
 
             assert data != null;
-            Uri filepath=data.getData();
+             nidUri=data.getData();
+             imageUris.add(new Pair<>(nidUri,"nid"));
             try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
+                InputStream inputStream= getContentResolver().openInputStream(nidUri);
                 bitmap= BitmapFactory.decodeStream(inputStream);
                 userNid.setImageBitmap(bitmap);
-                encodeBitmapImage();
+//                encodeBitmapImage(1);
 
             } catch (Exception ex){
                 ex.printStackTrace();
@@ -418,13 +484,14 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         } else if (requestCode==2 && resultCode==RESULT_OK) {
 
             assert data != null;
-            Uri filepath=data.getData();
+             profileUri=data.getData();
+             imageUris.add(new Pair<>(profileUri,"profile"));
             try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
+                InputStream inputStream= getContentResolver().openInputStream(profileUri);
                 bitmap= BitmapFactory.decodeStream(inputStream);
                 userProfilePhoto.setImageBitmap(bitmap);
-                encodeBitmapImage();
+//                encodeBitmapImage(2);
 
             } catch (Exception ex){
                 ex.printStackTrace();
@@ -434,28 +501,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void encodeBitmapImage() {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,60,byteArrayOutputStream);
-        byte[] bytesOfImage=byteArrayOutputStream.toByteArray();
-        int lengthbmp = bytesOfImage.length;
-        lengthbmp=lengthbmp/1024;
-        System.out.println("image length : " + lengthbmp);
-
-        if (lengthbmp>2048){
-
-            Toast.makeText(this, "Image Too Large...select a smaller one", Toast.LENGTH_SHORT).show();
-
-        } else if (lengthbmp==0){
-
-            encodedImage="";
-
-        }else{
-
-            encodedImage= Base64.encodeToString(bytesOfImage, Base64.DEFAULT);
-        }
-    }
 
 
     // set date method

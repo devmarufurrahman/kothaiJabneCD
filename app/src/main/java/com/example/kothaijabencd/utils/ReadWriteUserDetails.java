@@ -1,9 +1,13 @@
 package com.example.kothaijabencd.utils;
 
 public class ReadWriteUserDetails {
-    String name, dateOfBirth, contact, address, occupation, gender, religion, nidImage, profileImage;
+    String name, dateOfBirth, contact, address, occupation, gender, religion, create_date;
+    int user_role;
 
-    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String nidImage, String profileImage) {
+    public ReadWriteUserDetails() {
+    }
+
+    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String create_date, int user_role) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contact = contact;
@@ -11,11 +15,8 @@ public class ReadWriteUserDetails {
         this.occupation = occupation;
         this.gender = gender;
         this.religion = religion;
-        this.nidImage = nidImage;
-        this.profileImage = profileImage;
-    }
-
-    public ReadWriteUserDetails() {
+        this.create_date = create_date;
+        this.user_role = user_role;
     }
 
     public String getName() {
@@ -74,19 +75,19 @@ public class ReadWriteUserDetails {
         this.religion = religion;
     }
 
-    public String getNidImage() {
-        return nidImage;
+    public String getCreate_date() {
+        return create_date;
     }
 
-    public void setNidImage(String nidImage) {
-        this.nidImage = nidImage;
+    public void setCreate_date(String create_date) {
+        this.create_date = create_date;
     }
 
-    public String getProfileImage() {
-        return profileImage;
+    public int getUser_role() {
+        return user_role;
     }
 
-    public void setProfileImage(String profileImage) {
-        this.profileImage = profileImage;
+    public void setUser_role(int user_role) {
+        this.user_role = user_role;
     }
 }
