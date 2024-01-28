@@ -73,8 +73,7 @@
                         android:id="@+id/user_photo"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:padding="4dp"
-                        android:src="@drawable/cover_pic"/>
+                        android:padding="4dp"/>
 
 
                 </LinearLayout>
@@ -502,6 +501,6 @@
         app:itemIconTint="@color/red"
         android:layout_gravity="start"
         android:background="@color/app_bg_color"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

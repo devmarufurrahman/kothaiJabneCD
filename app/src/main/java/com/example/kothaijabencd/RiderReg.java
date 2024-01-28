@@ -49,6 +49,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
     Bitmap bitmap;
     Dialog dialog;
     LinearLayout bikeLayout;
+    Uri drivingImg, slipImg, nidImg, profileImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -373,86 +374,77 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
         if (requestCode==1 && resultCode==RESULT_OK){
 
             assert data != null;
-            Uri filepath=data.getData();
-            try {
+            drivingImg=data.getData();
+            if ("image/jpeg".equals(getContentResolver().getType(drivingImg))) {
+                try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                riderDl.setImageBitmap(bitmap);
-                encodeBitmapImage();
+                    InputStream inputStream = getContentResolver().openInputStream(drivingImg);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    riderDl.setImageBitmap(bitmap);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }  else {
+                Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode==2 && resultCode==RESULT_OK) {
 
             assert data != null;
-            Uri filepath=data.getData();
-            try {
+            slipImg=data.getData();
+            if ("image/jpeg".equals(getContentResolver().getType(slipImg))) {
+                try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                riderBikeSlip.setImageBitmap(bitmap);
-                encodeBitmapImage();
+                    InputStream inputStream = getContentResolver().openInputStream(slipImg);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    riderBikeSlip.setImageBitmap(bitmap);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }  else {
+                Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode==3 && resultCode==RESULT_OK) {
 
             assert data != null;
-            Uri filepath=data.getData();
-            try {
+            nidImg=data.getData();
+            if ("image/jpeg".equals(getContentResolver().getType(nidImg))) {
+                try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                riderNid.setImageBitmap(bitmap);
-                encodeBitmapImage();
+                    InputStream inputStream = getContentResolver().openInputStream(nidImg);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    riderNid.setImageBitmap(bitmap);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }  else {
+                Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode==4 && resultCode==RESULT_OK) {
 
             assert data != null;
-            Uri filepath=data.getData();
-            try {
+            profileImg=data.getData();
+            if ("image/jpeg".equals(getContentResolver().getType(profileImg))) {
+                try {
 
-                InputStream inputStream= getContentResolver().openInputStream(filepath);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                riderProfilePhoto.setImageBitmap(bitmap);
-                encodeBitmapImage();
+                    InputStream inputStream = getContentResolver().openInputStream(profileImg);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    riderProfilePhoto.setImageBitmap(bitmap);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }  else {
+                Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void encodeBitmapImage() {
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,60,byteArrayOutputStream);
-        byte[] bytesOfImage=byteArrayOutputStream.toByteArray();
-        int lengthbmp = bytesOfImage.length;
-        lengthbmp=lengthbmp/1024;
-        System.out.println("image length : " + lengthbmp);
-
-        if (lengthbmp>2048){
-
-            Toast.makeText(this, "Image Too Large...select a smaller one", Toast.LENGTH_SHORT).show();
-
-        } else if (lengthbmp==0){
-
-            encodedImage="";
-
-        }else{
-
-            encodedImage= Base64.encodeToString(bytesOfImage, Base64.DEFAULT);
-        }
-    }
 
 
 

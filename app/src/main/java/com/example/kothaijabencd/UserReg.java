@@ -271,7 +271,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                         public void onPermissionGranted(PermissionGrantedResponse response) {
 
                             Intent intent = new Intent(Intent.ACTION_PICK);
-                            intent.setType("image/*");
+                            intent.setType("image/jpg");
                             startActivityForResult(Intent.createChooser(intent, "Select Image"), REQ_CODE);
                         }
                         @Override
@@ -410,6 +410,11 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                                        StorageReference fileReference  = storageReference.child(uuid + name +"." +
                                                getFileExtensions(imgUri));
                                        fileReference.putFile(imgUri);
+
+//                                     open login system
+                                       Intent loginIntent = new Intent(UserReg.this, LoginActivity.class);
+                                       startActivity(loginIntent);
+                                       finish();
                                    }
                                }
 
@@ -419,11 +424,6 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                                progressbar.setVisibility(View.GONE);
 
 
-//                       open login system
-                               Intent loginIntent = new Intent(UserReg.this, LoginActivity.class);
-                               loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                               startActivity(loginIntent);
-                               finish();
                            }
 
                        });
@@ -449,10 +449,6 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
             });
         }
 
-//        Toast.makeText(UserReg.this, "Your Account Created", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(UserReg.this, LoginActivity.class);
-//        startActivity(intent);
-//        finish();
     }
 
     private String getFileExtensions(Uri filepath) {
@@ -470,31 +466,40 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
 
             assert data != null;
              nidUri=data.getData();
-             imageUris.add(new Pair<>(nidUri,"nid"));
-            try {
+             if ("image/jpeg".equals(getContentResolver().getType(nidUri))){
+                 imageUris.add(new Pair<>(nidUri,"nid"));
+                 try {
 
-                InputStream inputStream= getContentResolver().openInputStream(nidUri);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                userNid.setImageBitmap(bitmap);
+                     InputStream inputStream= getContentResolver().openInputStream(nidUri);
+                     bitmap= BitmapFactory.decodeStream(inputStream);
+                     userNid.setImageBitmap(bitmap);
 //                encodeBitmapImage(1);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
-            }
+                 } catch (Exception ex){
+                     ex.printStackTrace();
+                 }
+             } else {
+                 Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
+             }
+
         } else if (requestCode==2 && resultCode==RESULT_OK) {
 
             assert data != null;
              profileUri=data.getData();
-             imageUris.add(new Pair<>(profileUri,"profile"));
-            try {
+            if ("image/jpeg".equals(getContentResolver().getType(profileUri))) {
+                imageUris.add(new Pair<>(profileUri, "profile"));
+                try {
 
-                InputStream inputStream= getContentResolver().openInputStream(profileUri);
-                bitmap= BitmapFactory.decodeStream(inputStream);
-                userProfilePhoto.setImageBitmap(bitmap);
+                    InputStream inputStream = getContentResolver().openInputStream(profileUri);
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+                    userProfilePhoto.setImageBitmap(bitmap);
 //                encodeBitmapImage(2);
 
-            } catch (Exception ex){
-                ex.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }  else {
+                Toast.makeText(this, "Only select jpg format", Toast.LENGTH_SHORT).show();
             }
         }
 
