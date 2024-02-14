@@ -229,10 +229,11 @@ public class HomeActivity extends AppCompatActivity {
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     name = value.getString("name");
                     level = Math.toIntExact(value.getLong("user_role"));
-                    active_flag = Math.toIntExact(value.getLong("active_flag"));
+//                    active_flag = Math.toIntExact(value.getLong("active_flag"));
                     id = userId;
                     address = value.getString("address");
                     startDate = value.getString("create_date");
+                    active_flag = 1;
                     if (active_flag == 1){
                         setUserData(name, level, id, address, startDate);
                     } else {

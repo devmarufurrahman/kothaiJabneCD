@@ -451,6 +451,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
 
     }
 
+    // file extensions get method
     private String getFileExtensions(Uri filepath) {
         ContentResolver cr = getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
