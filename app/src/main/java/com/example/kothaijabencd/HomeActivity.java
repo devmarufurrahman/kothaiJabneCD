@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseStorage firebaseStorage;
     TextView profile_name, profile_level, profile_id, user_address, member_start_date;
     String name, id, address, startDate;
-    int level;
+    int level, active_flag;
 
 
     @Override
@@ -229,10 +229,15 @@ public class HomeActivity extends AppCompatActivity {
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                     name = value.getString("name");
                     level = Math.toIntExact(value.getLong("user_role"));
+                    active_flag = Math.toIntExact(value.getLong("active_flag"));
                     id = userId;
                     address = value.getString("address");
                     startDate = value.getString("create_date");
-                    setUserData(name, level, id, address, startDate);
+                    if (active_flag == 1){
+                        setUserData(name, level, id, address, startDate);
+                    } else {
+                        Toast.makeText(HomeActivity.this, "Your account is not Activate, Please Contact Admin.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 

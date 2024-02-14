@@ -392,7 +392,7 @@ public class UserReg extends AppCompatActivity  implements DatePickerDialog.OnDa
                        uuid = firebaseUser.getUid();
 
 //                       user data save in firestore
-                       ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,4);
+                       ReadWriteUserDetails writeUserDetails = new ReadWriteUserDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,4,1);
                        DocumentReference documentReference = firestore.collection("user_profile").document(uuid);
 
                        documentReference.set(writeUserDetails).addOnSuccessListener(new OnSuccessListener<Void>() {

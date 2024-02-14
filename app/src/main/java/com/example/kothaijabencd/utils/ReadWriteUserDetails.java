@@ -2,12 +2,12 @@ package com.example.kothaijabencd.utils;
 
 public class ReadWriteUserDetails {
     String name, dateOfBirth, contact, address, occupation, gender, religion, create_date;
-    int user_role;
+    int user_role, active_flag;
 
     public ReadWriteUserDetails() {
     }
 
-    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String create_date, int user_role) {
+    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String create_date, int user_role, int active_flag) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contact = contact;
@@ -17,6 +17,7 @@ public class ReadWriteUserDetails {
         this.religion = religion;
         this.create_date = create_date;
         this.user_role = user_role;
+        this.active_flag = active_flag;
     }
 
     public String getName() {
@@ -89,5 +90,13 @@ public class ReadWriteUserDetails {
 
     public void setUser_role(int user_role) {
         this.user_role = user_role;
+    }
+
+    public int getActive_flag() {
+        return active_flag;
+    }
+
+    public void setActive_flag(int active_flag) {
+        this.active_flag = active_flag;
     }
 }
