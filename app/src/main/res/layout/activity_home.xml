@@ -117,7 +117,7 @@
                         android:layout_gravity="start"
                         android:textColor="@color/black"
                         android:text="User Level"
-                        android:textSize="12sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/profile_id"
@@ -126,7 +126,7 @@
                         android:layout_gravity="start"
                         android:textColor="@color/black"
                         android:text="User ID"
-                        android:textSize="12sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/user_address"
@@ -135,7 +135,7 @@
                         android:layout_gravity="start"
                         android:textColor="@color/black"
                         android:text="Address"
-                        android:textSize="12sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/member_start_date"
@@ -144,7 +144,7 @@
                         android:layout_gravity="start"
                         android:textColor="@color/black"
                         android:text="User Since: January 20, 2023"
-                        android:textSize="12sp"/>
+                        android:textSize="14sp"/>
 
                 </LinearLayout>
 
@@ -218,9 +218,9 @@
                                     android:layout_height="wrap_content"
                                     android:text="Ride Share"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
+                                    android:textSize="14sp"
 
-                                    android:textAllCaps="true"/>
+                                    android:textAllCaps="false"/>
 
                             </LinearLayout>
 
@@ -254,8 +254,8 @@
                                     android:text="Parcel Delivery"
                                     android:gravity="center"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
-                                    android:textAllCaps="true"/>
+                                    android:textSize="14sp"
+                                    android:textAllCaps="false"/>
 
                             </LinearLayout>
 
@@ -287,8 +287,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="food delivery"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
-                                    android:textAllCaps="true"/>
+                                    android:textSize="14sp"
+                                    android:textAllCaps="false"/>
 
                             </LinearLayout>
 
@@ -320,8 +320,8 @@
                                     android:text="Medicine Delivery"
                                     android:gravity="center"
                                     android:textColor="@color/black"
-                                    android:textSize="12sp"
-                                    android:textAllCaps="true"/>
+                                    android:textSize="14sp"
+                                    android:textAllCaps="false"/>
 
                             </LinearLayout>
 
@@ -417,9 +417,9 @@
                             android:layout_height="wrap_content"
                             android:text="Manage Rider"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
 
-                            android:textAllCaps="true"/>
+                            android:textAllCaps="false"/>
 
                     </LinearLayout>
 
@@ -452,8 +452,8 @@
                             android:layout_height="wrap_content"
                             android:text="Activity Log"
                             android:textColor="@color/black"
-                            android:textSize="12sp"
-                            android:textAllCaps="true"/>
+                            android:textSize="14sp"
+                            android:textAllCaps="false"/>
 
                     </LinearLayout>
 

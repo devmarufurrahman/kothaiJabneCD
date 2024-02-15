@@ -85,7 +85,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
 
         // id selector
         firestore = FirebaseFirestore.getInstance();
-        storageReference = FirebaseStorage.getInstance().getReference("profile_rider");
+        storageReference = FirebaseStorage.getInstance().getReference("profile_user");
 //        riderName = findViewById(R.id.riderName);
 //        riderAddress = findViewById(R.id.riderAddress);
 //        riderOccupation = findViewById(R.id.riderOccupation);
@@ -387,7 +387,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
         } else if (profileImg.equals("")) {
             Toast.makeText(this, "Image can't be blank", Toast.LENGTH_SHORT).show();
         } else {
-//            progressbar.setVisibility(View.VISIBLE);
+            binding.progressbar.setVisibility(View.VISIBLE);
             FirebaseAuth auth = FirebaseAuth.getInstance();
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 LocalDate date = LocalDate.now();
@@ -416,7 +416,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
                         }
 //                       user data save in firestore
                         ReadWriterRiderDetails writerRiderDetails = new ReadWriterRiderDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,transport_ref,bikeInfo,user_role,2);
-                        DocumentReference documentReference = firestore.collection("user_rider").document(uuid);
+                        DocumentReference documentReference = firestore.collection("user_profile").document(uuid);
 
                         documentReference.set(writerRiderDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -444,7 +444,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
 
 //                        send verification email
                                 firebaseUser.sendEmailVerification();
-//                                progressbar.setVisibility(View.GONE);
+                                binding.progressbar.setVisibility(View.GONE);
 
 
                             }
@@ -458,14 +458,14 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
                         } catch (FirebaseAuthInvalidCredentialsException e){
                             binding.riderEmail.setError("Your email is invalid or already in use. Kindly re-enter");
                             binding.riderEmail.requestFocus();
-//                            progressbar.setVisibility(View.GONE);
+                            binding.progressbar.setVisibility(View.GONE);
                         } catch (FirebaseAuthUserCollisionException e){
                             binding.riderEmail.setError("Your email is already registered. Use another email");
                             binding.riderEmail.requestFocus();
-//                            progressbar.setVisibility(View.GONE);
+                            binding.progressbar.setVisibility(View.GONE);
                         } catch (Exception e){
                             Log.e("User Auth", "Reg: " + e );
-//                            progressbar.setVisibility(View.GONE);
+                            binding.progressbar.setVisibility(View.GONE);
                         }
                     }
                 }

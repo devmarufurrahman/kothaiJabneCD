@@ -1,6 +1,7 @@
 package com.example.kothaijabencd;
 
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseStorage firebaseStorage;
     TextView profile_name, profile_level, profile_id, user_address, member_start_date;
-    String name, id, address, startDate;
+    String name="N/A", id="N/A", address="N/A", startDate="N/A";
     int level, active_flag;
 
 
@@ -209,13 +211,27 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setUserData(String name, int level, String id, String address, String startDate) {
         profile_name.setText(name);
-        profile_level.setText(String.valueOf(level));
         profile_id.setText(id);
         user_address.setText(address);
         member_start_date.setText("User Since: "+ startDate);
 
+        setUserLevel(level);
+
+
 
         Log.d("get value", name + level + address);
+    }
+
+    private void setUserLevel(int level) {
+        switch (level) {
+            case 1: profile_level.setText("Admin");
+                break;
+            case 2: profile_level.setText("Rider");
+                break;
+            case 3: profile_level.setText("Delivery Man");
+                break;
+            case 4: profile_level.setText("User");
+        }
     }
 
     private void getUserData(FirebaseUser user) {
@@ -227,18 +243,43 @@ public class HomeActivity extends AppCompatActivity {
             documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                 @Override
                 public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                    name = value.getString("name");
-                    level = Math.toIntExact(value.getLong("user_role"));
-//                    active_flag = Math.toIntExact(value.getLong("active_flag"));
-                    id = userId;
-                    address = value.getString("address");
-                    startDate = value.getString("create_date");
-                    active_flag = 1;
-                    if (active_flag == 1){
-                        setUserData(name, level, id, address, startDate);
-                    } else {
-                        Toast.makeText(HomeActivity.this, "Your account is not Activate, Please Contact Admin.", Toast.LENGTH_SHORT).show();
+                    if (value != null){
+                        name = value.getString("name");
+                        level = Math.toIntExact(value.getLong("user_role"));
+                        active_flag = Math.toIntExact(value.getLong("active_flag"));
+                        id = userId;
+                        address = value.getString("address");
+                        startDate = value.getString("create_date");
                     }
+
+//                    active_flag = 1;
+//                    check user active or not
+                    Dialog dialog = new Dialog(HomeActivity.this);
+                    if(active_flag == 2){
+                        dialog.setContentView(R.layout.user_approval_dialog_layout);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.setCancelable(false);
+//                        dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
+                        dialog.show();
+
+                        Button logout = dialog.findViewById(R.id.log_btn);
+                        logout.setOnClickListener(v -> {
+                            Intent intent=new Intent(HomeActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            finish();
+                            firebaseAuth.signOut();
+                        });
+                    } else{
+                        dialog.dismiss();
+                    }
+
+//                    user details show
+                    setUserData(name, level, id, address, startDate);
+                    
+                    
+
+
                 }
             });
 
