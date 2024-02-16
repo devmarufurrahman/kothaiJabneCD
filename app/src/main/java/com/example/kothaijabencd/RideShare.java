@@ -47,7 +47,6 @@ public class RideShare extends AppCompatActivity {
 
     String destination, event_latitude;
     float distance;
-    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +80,6 @@ public class RideShare extends AppCompatActivity {
 
 
 
-        // location services
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        getCurrentLocation();
-
-
         // rider find
         findRider.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,39 +106,6 @@ public class RideShare extends AppCompatActivity {
         distanceCost.setText("Payable: " + disCost +" Tk");
     }
 
-
-    // get current location
-    private void getCurrentLocation() {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-
-                Location location = task.getResult();
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(RideShare.this, Locale.getDefault());
-                    try {
-                        List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        //List<Address> addressList = geocoder.getFromLocation(23.755247, 90.393884, 1);
-
-//                        user_latitude = addressList.get(0).getLatitude();
-//                        user_longitude = addressList.get(0).getLongitude();
-//                         address = addressList.get(0).getAddressLine(0);
-
-
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
 
 
     @Override

@@ -62,27 +62,24 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //login process event
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               email = emailTv.getText().toString();
-               pass = passTv.getText().toString();
+        loginBtn.setOnClickListener(v -> {
+           email = emailTv.getText().toString();
+           pass = passTv.getText().toString();
 
-               if (email.equals("")){
-                   emailTv.setError("email can't be blank");
-                   emailTv.requestFocus();
-               } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                   emailTv.setError("please provide a valid email");
-                   emailTv.requestFocus();
-               } else if (pass.equals("")) {
-                   passTv.setError("password can't be blank");
-                   passTv.requestFocus();
-               } else {
-                   progressBar.setVisibility(View.VISIBLE);
-                   loginMethod(email,pass);
-               }
+           if (email.equals("")){
+               emailTv.setError("email can't be blank");
+               emailTv.requestFocus();
+           } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+               emailTv.setError("please provide a valid email");
+               emailTv.requestFocus();
+           } else if (pass.equals("")) {
+               passTv.setError("password can't be blank");
+               passTv.requestFocus();
+           } else {
+               progressBar.setVisibility(View.VISIBLE);
+               loginMethod(email,pass);
+           }
 
-            }
         });
 
 
