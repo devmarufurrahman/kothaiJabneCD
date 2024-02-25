@@ -501,6 +501,6 @@
         app:itemIconTint="@color/red"
         android:layout_gravity="start"
         android:background="@color/app_bg_color"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

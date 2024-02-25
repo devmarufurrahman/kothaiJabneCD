@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.kothaijabencd.utils.CurrentLocation;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,7 +30,7 @@ import java.util.Locale;
 public class SplashScreen extends AppCompatActivity {
 
     String login="", address= "";
-    FusedLocationProviderClient fusedLocationProviderClient;
+    CurrentLocation currentLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +43,13 @@ public class SplashScreen extends AppCompatActivity {
 
 
 
-        // location services
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            getCurrentLocation();
+            currentLocation = new CurrentLocation(SplashScreen.this);
+            String address = currentLocation.getAddress();
+//            Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+            Log.d("address2", "address2"+address);
 
         }
 
@@ -65,42 +66,5 @@ public class SplashScreen extends AppCompatActivity {
         },2000);
 
     }
-
-
-    // get current location
-    private void getCurrentLocation() {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-
-                Location location = task.getResult();
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(SplashScreen.this, Locale.getDefault());
-                    try {
-                        List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                        //List<Address> addressList = geocoder.getFromLocation(23.755247, 90.393884, 1);
-
-//                        user_latitude = addressList.get(0).getLatitude();
-//                        user_longitude = addressList.get(0).getLongitude();
-                         address = addressList.get(0).getAddressLine(0);
-
-                        Log.d("address", "adress"+ address);
-                        Toast.makeText(SplashScreen.this, address, Toast.LENGTH_SHORT).show();
-
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
 
 }

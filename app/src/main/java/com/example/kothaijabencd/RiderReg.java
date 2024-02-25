@@ -43,6 +43,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -69,7 +70,7 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
     ActivityRiderRegBinding binding;
     ArrayList<String> religion,  gender, transport;
     int day, month, year, myday, myMonth, myYear, user_role = 0;
-    String religion_ref= "", gender_ref= "", transport_ref= "", birth_date = "", encodedImage = "", today, uuid;
+    String religion_ref= "", gender_ref= "", transport_ref= "", birth_date = "", encodedImage = "", today="", uuid="", TOKEN="";
     Bitmap bitmap;
     FirebaseFirestore firestore;
     StorageReference storageReference;
@@ -414,42 +415,62 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
                         } else {
                             user_role = 3;
                         }
-//                       user data save in firestore
-                        ReadWriterRiderDetails writerRiderDetails = new ReadWriterRiderDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,transport_ref,bikeInfo,user_role,2);
-                        DocumentReference documentReference = firestore.collection("user_profile").document(uuid);
 
-                        documentReference.set(writerRiderDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(RiderReg.this, "Registration Successful Submitted", Toast.LENGTH_SHORT).show();
-                                Log.d("create uuid", "onSuccess: user is "+ uuid);
+                        firebaseUser.getIdToken(true)
+                                .addOnCompleteListener(new OnCompleteListener<GetTokenResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<GetTokenResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Get the user's ID token
+                                            TOKEN = task.getResult().getToken();
+                                            // Use this token for various purposes
+
+//                       user data save in firestore
+                                            ReadWriterRiderDetails writerRiderDetails = new ReadWriterRiderDetails(name,birth_date,contact,address,occupation,gender_ref,religion_ref,today,transport_ref,bikeInfo, TOKEN, user_role,2);
+                                            DocumentReference documentReference = firestore.collection("user_profile").document(uuid);
+
+                                            documentReference.set(writerRiderDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Toast.makeText(RiderReg.this, "Registration Successful Submitted", Toast.LENGTH_SHORT).show();
+                                                    Log.d("create uuid", "onSuccess: user is "+ uuid);
 
 //                               save images
-                                if (!nidImg.equals("") && !profileImg.equals("")){
+                                                    if (!nidImg.equals("") && !profileImg.equals("")){
 
-                                    for (Pair<Uri, String> pair : imageUris){
-                                        Uri imgUri = pair.first;
-                                        String name = pair.second;
-                                        StorageReference fileReference  = storageReference.child(uuid + name +"." +
-                                                getFileExtensions(imgUri));
-                                        fileReference.putFile(imgUri);
+                                                        for (Pair<Uri, String> pair : imageUris){
+                                                            Uri imgUri = pair.first;
+                                                            String name = pair.second;
+                                                            StorageReference fileReference  = storageReference.child(uuid + name +"." +
+                                                                    getFileExtensions(imgUri));
+                                                            fileReference.putFile(imgUri);
 
 //                                     open login system
-                                        Intent loginIntent = new Intent(RiderReg.this, LoginActivity.class);
-                                        startActivity(loginIntent);
-                                        finish();
-                                    }
-                                }
+                                                            Intent loginIntent = new Intent(RiderReg.this, LoginActivity.class);
+                                                            startActivity(loginIntent);
+                                                            finish();
+                                                        }
+                                                    }
 
 
 //                        send verification email
-                                firebaseUser.sendEmailVerification();
-                                binding.progressbar.setVisibility(View.GONE);
+                                                    firebaseUser.sendEmailVerification();
+                                                    binding.progressbar.setVisibility(View.GONE);
 
 
-                            }
+                                                }
 
-                        });
+                                            });
+
+                                        } else {
+                                            // Handle error
+                                            Exception exception = task.getException();
+                                            if (exception != null) {
+                                                Log.e("TokenError", exception.getMessage());
+                                            }
+                                        }
+                                    }
+                                });
 
 
                     } else {
@@ -536,7 +557,8 @@ public class RiderReg extends AppCompatActivity  implements DatePickerDialog.OnD
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cr.getType(filepath));
     };
-    
+
+
 
     // set image method
     @Override

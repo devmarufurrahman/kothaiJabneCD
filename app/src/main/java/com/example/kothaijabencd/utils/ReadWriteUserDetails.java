@@ -1,13 +1,13 @@
 package com.example.kothaijabencd.utils;
 
 public class ReadWriteUserDetails {
-    String name, dateOfBirth, contact, address, occupation, gender, religion, create_date;
+    String name, dateOfBirth, contact, address, occupation, gender, religion, create_date, userToken;
     int user_role, active_flag;
 
     public ReadWriteUserDetails() {
     }
 
-    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String create_date, int user_role, int active_flag) {
+    public ReadWriteUserDetails(String name, String dateOfBirth, String contact, String address, String occupation, String gender, String religion, String create_date, String userToken, int user_role, int active_flag) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contact = contact;
@@ -16,6 +16,7 @@ public class ReadWriteUserDetails {
         this.gender = gender;
         this.religion = religion;
         this.create_date = create_date;
+        this.userToken = userToken;
         this.user_role = user_role;
         this.active_flag = active_flag;
     }
@@ -82,6 +83,14 @@ public class ReadWriteUserDetails {
 
     public void setCreate_date(String create_date) {
         this.create_date = create_date;
+    }
+
+    public String getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(String userToken) {
+        this.userToken = userToken;
     }
 
     public int getUser_role() {
