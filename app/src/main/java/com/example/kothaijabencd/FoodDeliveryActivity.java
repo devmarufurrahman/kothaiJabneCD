@@ -6,10 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -43,7 +45,7 @@ public class FoodDeliveryActivity extends AppCompatActivity {
         
         
         binding.placeOrder.setOnClickListener(v -> {
-            sendNotificationToRider("fyiqt4uSS8-nRgxlRHHY-N:APA91bFhpgiPiMoIsW7jgkn4aZ2cykwFx1Y3kGDcKfDtpGN14DuFjHlPXT2tr0OxWao38H9HkaAY4uWF-eAhdyOhkphIPpWgAMRLurP4Gqr0fYECzuScYk_rXVwwvPU61culXRnwfmN4", "Hi", "Hello test", context);
+            sendNotificationToRider("fyiqt4uSS8-nRgxlRHHY-N:APA91bGPmIoACTPOBjRSn3X1dQ7ubMSYtOR3jlR6h3NCFof4HVgz1aRCw61Ppk6aLKqT9ZVb1czil2APEjANYocgXQHgwsWxnc-zyIInOcjCbtGlABgD7R_HgS2Vu__TAwICqA5_m4Io", "Hi", "Hello test", context);
         });
     }
 
@@ -51,22 +53,28 @@ public class FoodDeliveryActivity extends AppCompatActivity {
         // Method to send notification to a single rider device
         public static void sendNotificationToRider(String riderToken, String title, String message, Context context) {
             try {
-                // Create JSON payload for notification
+                // Create JSON payload for notification and  Create JSON payload for FCM message
                 JSONObject notificationPayload = new JSONObject();
-                notificationPayload.put("title", title);
-                notificationPayload.put("body", message);
+                JSONObject messagePayload = new JSONObject();
+                try{
 
-                // Create JSON payload for FCM message
-                JSONObject fcmPayload = new JSONObject();
-                fcmPayload.put("to", riderToken);
-                fcmPayload.put("data", notificationPayload);
+                    notificationPayload.put("title", title);
+                    notificationPayload.put("body", message);
+                    messagePayload.put("to", riderToken);
+                    messagePayload.put("notification", notificationPayload);
+
+                } catch (JSONException e){
+                    e.printStackTrace();
+                }
+
 
                 // Create JsonObjectRequest
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "https://fcm.googleapis.com/fcm/send", fcmPayload,
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, "https://fcm.googleapis.com/fcm/send", messagePayload,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
                                 System.out.println("Notification sent successfully to rider: " );
+                                System.out.println(messagePayload );
                             }
                         },
                         new Response.ErrorListener() {
@@ -80,14 +88,17 @@ public class FoodDeliveryActivity extends AppCompatActivity {
                         Map<String, String> headers = new HashMap<>();
                         headers.put("Authorization", "key=" + SERVER_KEY);
                         headers.put("Content-Type", "application/json");
+                        System.out.println(headers);
                         return headers;
                     }
                 };
 
                 // Add request to Volley request queue
-                Volley.newRequestQueue(context).add(jsonObjectRequest);
+                RequestQueue queue = Volley.newRequestQueue(context);
+                queue.add(jsonObjectRequest);
 
-            } catch (JSONException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
