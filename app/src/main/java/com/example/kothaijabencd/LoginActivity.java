@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kothaijabencd.utils.ReadWriterRiderDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +30,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    FirebaseFirestore firestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         emailTv = findViewById(R.id.loginEmail);
         passTv = findViewById(R.id.loginPass);
         forgotPassword = findViewById(R.id.forgotPassword);
+        firestore = FirebaseFirestore.getInstance();
 
 
         SharedPreferences preferences = getSharedPreferences("SharePreference", MODE_PRIVATE);
@@ -143,9 +153,21 @@ public class LoginActivity extends AppCompatActivity {
 
 //                    email verify check
                     if (firebaseUser.isEmailVerified()){
-                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        finish();
+
+                        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task1 -> {
+                            String token = task1.getResult();
+                            Map<String, Object> updates = new HashMap<>();
+                            updates.put("userToken",token);
+                            DocumentReference documentReference = firestore.collection("user_profile").document(firebaseUser.getUid());
+
+                            documentReference.update(updates).addOnSuccessListener(unused -> {
+
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                finish();
+                            });
+                        });
+
                     } else {
                      firebaseUser.sendEmailVerification();
                      firebaseAuth.signOut();

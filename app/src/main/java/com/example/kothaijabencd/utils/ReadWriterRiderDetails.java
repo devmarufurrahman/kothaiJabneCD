@@ -23,6 +23,10 @@ public class ReadWriterRiderDetails {
         this.active_flag = active_flag;
     }
 
+    public ReadWriterRiderDetails(String userToken) {
+        this.userToken = userToken;
+    }
+
     public String getName() {
         return name;
     }

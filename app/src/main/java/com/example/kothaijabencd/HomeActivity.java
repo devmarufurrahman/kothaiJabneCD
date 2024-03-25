@@ -2,8 +2,10 @@ package com.example.kothaijabencd;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,8 +30,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +43,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -67,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     FirebaseStorage firebaseStorage;
     TextView profile_name, profile_level, profile_id, user_address, member_start_date;
-    String name="N/A", id="N/A", address="N/A", startDate="N/A";
+    String name="N/A", id="N/A", address="N/A", startDate="N/A", userToken="N/A";
     int level, active_flag;
 
 
@@ -144,12 +149,18 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.main_menu_logout) {
-                    Intent intent=new Intent(HomeActivity.this, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                    finish();
-                    firebaseAuth.signOut();
+
+
+                    FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            Intent intent=new Intent(HomeActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent);
+                            drawerLayout.closeDrawer(GravityCompat.START);
+                            finish();
+                            firebaseAuth.signOut();
+                        }
+                    });
                 }
                 return true;
             }
@@ -250,7 +261,16 @@ public class HomeActivity extends AppCompatActivity {
                         id = userId;
                         address = value.getString("address");
                         startDate = value.getString("create_date");
+                        userToken = value.getString("userToken");
                     }
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("saveData", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", name);
+                    editor.putInt("level", level);
+                    editor.putString("id", id);
+                    editor.putString("userToken", userToken);
+                    editor.apply();
 
 //                    active_flag = 1;
 //                    check user active or not
@@ -268,7 +288,11 @@ public class HomeActivity extends AppCompatActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                             finish();
-                            firebaseAuth.signOut();
+                            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(task -> {
+                                if (task.isSuccessful()){
+                                    firebaseAuth.signOut();
+                                }
+                            });
                         });
                     } else{
                         dialog.dismiss();
