@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,10 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
 
-        SharedPreferences preferences = getSharedPreferences("SharePreference", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-//                editor.putString("contact", contact);
-        editor.apply();
 
         // all permission required
         permision();
@@ -159,6 +156,11 @@ public class LoginActivity extends AppCompatActivity {
                             Map<String, Object> updates = new HashMap<>();
                             updates.put("userToken",token);
                             DocumentReference documentReference = firestore.collection("user_profile").document(firebaseUser.getUid());
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("saveData", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("userToken", token);
+                            editor.apply();
 
                             documentReference.update(updates).addOnSuccessListener(unused -> {
 

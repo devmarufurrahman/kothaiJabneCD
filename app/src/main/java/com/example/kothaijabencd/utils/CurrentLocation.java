@@ -3,6 +3,7 @@ package com.example.kothaijabencd.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -63,6 +64,7 @@ public class CurrentLocation {
 
                         Log.d("address", "address"+ address);
                         Toast.makeText(context, address, Toast.LENGTH_SHORT).show();
+                        setAddress(address);
 
                     }
                     catch (IOException e) {
