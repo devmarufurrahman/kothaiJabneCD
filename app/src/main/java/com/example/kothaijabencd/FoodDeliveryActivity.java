@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.kothaijabencd.databinding.ActivityFoodDeliveryBinding;
+import com.example.kothaijabencd.utils.ActivityLogReadWrite;
 import com.example.kothaijabencd.utils.FieldValidation;
 import com.example.kothaijabencd.utils.Order.FoodOrder;
 import com.example.kothaijabencd.utils.UserFCMTokenRetriever;
@@ -29,7 +30,7 @@ public class FoodDeliveryActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActivityFoodDeliveryBinding binding;
     Context context = FoodDeliveryActivity.this;
-    String title="Food Order", body="", uuid="", name = "", today = "", userToken = "";
+    String title="Food Order", body="", uuid="", name = "", today = "";
     FieldValidation validation = new FieldValidation();
     DatabaseReference db ;
 
@@ -49,7 +50,6 @@ public class FoodDeliveryActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("saveData", Context.MODE_PRIVATE);
         name = sharedPreferences.getString("name","");
         uuid = sharedPreferences.getString("id","");
-        userToken = sharedPreferences.getString("uerToken","");
 
 //        firebase database setup
         // Get a reference to the Firebase database
@@ -63,7 +63,10 @@ public class FoodDeliveryActivity extends AppCompatActivity {
     private void saveFoodOrder() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalDateTime dateTime = LocalDateTime.now();
-            today = dateTime.toString();
+            // Print the current date and time in the default format (yyyy-MM-dd HH:mm:ss)
+            DateTimeFormatter defaultFormat =  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            today = dateTime.format(defaultFormat);
             Log.d("Current Date and Time (update)", today);
         } else {
             Date currentDate = new Date();
@@ -90,24 +93,40 @@ public class FoodDeliveryActivity extends AppCompatActivity {
         } else if (destination.equals("")) {
             validation.fieldFocus(binding.restaurantName,"give restaurant name");
         } else {
+            binding.progressbar.setVisibility(View.VISIBLE);
             if (uuid != null || !uuid.isEmpty()){
-                binding.progressbar.setVisibility(View.VISIBLE);
                 body = name + " order "+ foodName;
 //                send notification
                 UserFCMTokenRetriever userFCMTokenRetriever = new UserFCMTokenRetriever(title, body, context);
                 userFCMTokenRetriever.retrieveUserFCMTokens();
 
+                // Generate a unique key for the food order
+                String orderKey = db.child("ProductOrders").child(uuid).child("food").push().getKey();
+
                 // Create a reference to the location where the data will be saved
-                DatabaseReference productOrderRef = db.child("productOrders").child(uuid);
-
-
+                assert orderKey != null;
+                DatabaseReference productOrderRef = db.child("ProductOrders").child(uuid).child("food").child(orderKey);
                 // Create a ProductOrder object with the provided data
-                FoodOrder productOrder = new FoodOrder(foodName, restaurantName, restaurantAddress, foodAmount, foodDetails, destination, today, "", "", "food", name, "", userToken);
+                FoodOrder productOrder = new FoodOrder(foodName, restaurantName, restaurantAddress, foodAmount, foodDetails, destination, today, "", "", name, "N/A", uuid, 1, 2);
 
                 // Save the ProductOrder object to the database
                 productOrderRef.setValue(productOrder);
-                binding.progressbar.setVisibility(View.GONE);
                 Toast.makeText(context, "Order Successfully", Toast.LENGTH_SHORT).show();
+
+                // Activity Added
+                // Generate activity key
+                String activityKey = db.child("Activity").child(uuid).push().getKey();
+
+//                create reference to the location where activity will save
+                assert activityKey != null;
+                DatabaseReference activityRef = db.child("Activity").child(uuid).child(activityKey);
+
+                // Object provide the data
+                ActivityLogReadWrite logWrite = new ActivityLogReadWrite("Food Order", orderKey, uuid, name, today, "", 1);
+                activityRef.setValue(logWrite);
+
+                binding.progressbar.setVisibility(View.GONE);
+                finish();
             } else {
                 Toast.makeText(context, "Order Unsuccessfully", Toast.LENGTH_SHORT).show();
                 binding.progressbar.setVisibility(View.GONE);

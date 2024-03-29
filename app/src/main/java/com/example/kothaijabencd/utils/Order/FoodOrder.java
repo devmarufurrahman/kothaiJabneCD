@@ -1,9 +1,10 @@
 package com.example.kothaijabencd.utils.Order;
 
 public class FoodOrder {
-    String foodName, restaurantName, restaurantAddress, foodAmount, foodDetails, destination, order_date, delivery_date, delivery_by, order_type, order_by, current_location, user_token;
+    String foodName, restaurantName, restaurantAddress, foodAmount, foodDetails, destination, order_date, delivery_date, delivery_by, order_by, current_location, user_id;
+    int  order_status, order_type;
 
-    public FoodOrder(String foodName, String restaurantName, String restaurantAddress, String foodAmount, String foodDetails, String destination, String order_date, String delivery_date, String delivery_by, String order_type, String order_by, String current_location, String user_token) {
+    public FoodOrder(String foodName, String restaurantName, String restaurantAddress, String foodAmount, String foodDetails, String destination, String order_date, String delivery_date, String delivery_by, String order_by, String current_location, String user_id, int order_status, int order_type) {
         this.foodName = foodName;
         this.restaurantName = restaurantName;
         this.restaurantAddress = restaurantAddress;
@@ -13,10 +14,11 @@ public class FoodOrder {
         this.order_date = order_date;
         this.delivery_date = delivery_date;
         this.delivery_by = delivery_by;
-        this.order_type = order_type;
         this.order_by = order_by;
         this.current_location = current_location;
-        this.user_token = user_token;
+        this.user_id = user_id;
+        this.order_status = order_status;
+        this.order_type = order_type;
     }
 
     public String getFoodName() {
@@ -91,14 +93,6 @@ public class FoodOrder {
         this.delivery_by = delivery_by;
     }
 
-    public String getOrder_type() {
-        return order_type;
-    }
-
-    public void setOrder_type(String order_type) {
-        this.order_type = order_type;
-    }
-
     public String getOrder_by() {
         return order_by;
     }
@@ -115,12 +109,27 @@ public class FoodOrder {
         this.current_location = current_location;
     }
 
-    public String getUser_token() {
-        return user_token;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUser_token(String user_token) {
-        this.user_token = user_token;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
+    public int getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(int order_status) {
+        this.order_status = order_status;
+    }
+
+    public int getOrder_type() {
+        return order_type;
+    }
+
+    public void setOrder_type(int order_type) {
+        this.order_type = order_type;
+    }
 }
